@@ -17,7 +17,7 @@
 - 아트 : Aseprite
 - 개발 환경 : Visual Studio
 
-## 📋 본인의 역할
+## 📝 본인의 역할
 
 ### 📚 수업 제공 기본 프레임워크
 - Device.cpp/h, DeviceFont.cpp/h - DirectX 초기화 및 폰트
