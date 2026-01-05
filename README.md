@@ -7,6 +7,7 @@
 - 프로젝트 기간 : 2025년 7월 2일 ~ 8월 3일 (4주)
 - 개발 인원 : 1명
 - 역할 : 기획, 아트, UI/UX, 프로그래밍 (시스템 구현)
+- 적용 기술 : Visual Studio, C++, DirectX 9, Aseprite
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
