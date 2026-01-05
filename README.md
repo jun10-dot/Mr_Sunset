@@ -1,7 +1,7 @@
 ## 🎮 Mr_Sunset 
 
 
-미스터선셋/C++ 모작 프로젝트
+미스터선셋 / C++ 모작 프로젝트
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
