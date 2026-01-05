@@ -5,6 +5,8 @@
 ## 🔎 프로젝트 정보
 
 - 프로젝트 기간 : 2025년 7월 2일 ~ 8월 3일 (4주)
+- 개발 인원 : 1명
+- 기획, 아트, UI/UX, 프로그래밍 (시스템 구현)
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
