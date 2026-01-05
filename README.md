@@ -2,6 +2,7 @@
 
 
 미스터선셋 / C++ 모작 프로젝트
+## 🔎 프로젝트 정보
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
