@@ -19,7 +19,7 @@
 
 ## 📋 본인의 역할
 
-# 📚 수업 제공 기본 프레임워크
+### 📚 수업 제공 기본 프레임워크
 - Device.cpp/h, DeviceFont.cpp/h - DirectX 초기화 및 폰트
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
