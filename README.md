@@ -35,9 +35,10 @@
 - Include.h - 공통 헤더, 사용자 정의 통합
 
 
-## 개발 방식
-
-- ## 라이선스
+## ⚙️ 개발 방식
+- 레벨 디자인, 게임 컨셉, UI 등 독창적으로 기획
+- Aseprite(스팀)를 사용해 맵, 캐릭터 등 스프라이트 제작
+## 라이선스
 - 이 프로젝트는 학습 목적으로 제작되었습니다.
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
