@@ -33,6 +33,9 @@
 - Chap.h, CMng.cpp/h - 씬 관리 구조
 - Main.cpp - 메인 루프 및 진입점 (수업 제공), 입력 처리 로직 일부 사용자 구현
 - Include.h - 공통 헤더, 사용자 정의 통합
+
+- ## 라이선스
+- 이 프로젝트는 학습 목적으로 제작되었습니다.
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
