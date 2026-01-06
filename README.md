@@ -19,7 +19,7 @@
 
 ## 📝 본인의 역할
 
-'Collider.cpp/h' - AABB 충돌 처리 유틸리티
+- 'Collider.cpp/h' - AABB 충돌 처리 유틸리티
 
 ### 📚 수업 제공 기본 프레임워크
 - DeviceFont.cpp/h - DirectX 초기화 및 폰트
