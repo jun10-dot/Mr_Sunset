@@ -20,7 +20,11 @@
 ## 📝 본인의 역할
 
 ### 📚 수업 제공 기본 프레임워크
-- Device.cpp/h, DeviceFont.cpp/h - DirectX 초기화 및 폰트
+- DeviceFont.cpp/h - DirectX 초기화 및 폰트
+- DXUTsound.cpp/h, Sprite.cpp/h - 사운드/스프라이트 렌더링
+- Chap.h, CMng.cpp/h - 씬 관리 구조
+- Main.cpp - 메인 루프 및 진입점 (수업 제공), 입력 처리 로직 일부 사용자 구현
+- Include.h - 공통 헤더, 사용자 정의 통합
 <!--
 **jun10-dot/Jun10-DOT** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
