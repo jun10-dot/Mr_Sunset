@@ -20,32 +20,24 @@
 ## 📝 본인의 역할
 
 ### 🎯 Gameplay & Character System
-- 'Player.cpp/h', 'Enemy.cpp/h'
-- 캐릭터 상태 관리 및 애니메이션 렌더링
+- 'Player.cpp/h', 'Enemy.cpp/h' - 캐릭터 상태 관리 및 애니메이션 렌더링
 
-- 'Bullet.cpp/h'
-- 총알 판정 및 물리 계산
+- 'Bullet.cpp/h' - 총알 판정 및 물리 계산
 
 ### 💥 Interaction & Collision
-- 'Collider.cpp/h'
-- AABB 기반 충돌 판정 유틸리티
+- 'Collider.cpp/h' - AABB 기반 충돌 판정 유틸리티
 
-- 'Block.cpp/h'
-- TNT 블록 파괴 효과 및 상호작용
+- 'Block.cpp/h' - TNT 블록 파괴 효과 및 상호작용
 
 ### 🗺️ Rendering & UI
-- 'Map.cpp/h'
-- 맵 렌더링
+- 'Map.cpp/h' - 맵 렌더링
 
-- 'Result.cpp/h'
-- 점수 및 UI 렌더
+- 'Result.cpp/h' - 점수 및 UI 렌더
 
 ### 🔊 System Management
-- 'Sound.cpp/h'
-- 사운드 재생 및 관리
+- 'Sound.cpp/h' - 사운드 재생 및 관리
 
-- 'GameManager.cpp/h'
-- 게임 상태 관리
+- 'GameManager.cpp/h' - 게임 상태 관리
 
 ### 📚 수업 제공 기본 프레임워크
 - DeviceFont.cpp/h - DirectX 초기화 및 폰트
