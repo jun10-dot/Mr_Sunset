@@ -22,7 +22,7 @@ Youtube : [https://youtu.be/hft7NLTV1gM](https://youtu.be/hft7NLTV1gM)
 - 그래픽 : DirectX 9 (Direct3D 9)
 - 오디오 : DirectSound
 - 아트 : Aseprite
-- 개발 환경 : Visual Studio
+- 개발 환경 : Visual Studio 2022
 
 ## 📝 본인의 역할
 
