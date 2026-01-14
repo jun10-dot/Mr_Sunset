@@ -8,7 +8,7 @@
   총 플레이 시간과 점수를 종합해 성과를 확인할 수 있도록 결과 시스템을 설계했습니다.
 
 ## 📺 전체 플레이 영상
-Youtube : [https://youtu.be/hft7NLTV1gM](https://youtu.be/hft7NLTV1gM)
+YouTube : [https://youtu.be/hft7NLTV1gM](https://youtu.be/hft7NLTV1gM)
 
 ## 🔎 프로젝트 정보
 
