@@ -59,7 +59,7 @@ YouTube : [https://youtu.be/hft7NLTV1gM](https://youtu.be/hft7NLTV1gM)
 - Aseprite(Steam)를 사용해 모든 스프라이트 직접 제작
 - 수업 자료를 참고하되, 렌더링, 충돌, 사운드 시스템을 구현하며 구조 이해에 집중
 ## Notion
-- https://www.notion.so/Unity-Game-Developer-Portfolio
+- https://www.notion.so/Unity-Game-Developer-Portfolio-2cbbe5889bd7813f8e68ed1bb2e473ff
 ## 라이선스
 - 이 프로젝트는 학습 목적으로 제작되었습니다.
 <!--
