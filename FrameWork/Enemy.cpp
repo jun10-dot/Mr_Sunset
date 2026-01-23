@@ -1,10 +1,10 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 Enemy enemy;
 
 Enemy::Enemy(float _x, float _y) :x(_x), y(_y)
 {
-	pos.x = _x; // ìœ„ì¹˜ ë²¡í„° ì´ˆê¸°í™”
+	pos.x = _x; // À§Ä¡ º¤ÅÍ ÃÊ±âÈ­
 	pos.y = _y;
 }
 
@@ -12,7 +12,7 @@ Enemy::~Enemy()
 {
 	for (int i = 0; i <2; i++)
 	{
-		Enemies[i].Destroy(); // ìŠ¤í”„ë¼ì´íŠ¸ í•´ì œ
+		Enemies[i].Destroy(); // ½ºÇÁ¶óÀÌÆ® ÇØÁ¦
 	}
 }
 
@@ -35,82 +35,88 @@ void Enemy::Init()
 	AlphaTime = 0;
 	Alphastate = false;
 
-	// ì  ìŠ¤í”„ë¼ì´íŠ¸ ë¡œë“œ
+	// Àû ½ºÇÁ¶óÀÌÆ® ·Îµå
 	for (int i = 0; i < 5; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/Enemy/Enemy-%04d.png", i);
 		Enemies[i].Create(FileName, false, D3DCOLOR_XRGB(255, 0, 255));
 		if (i == 0)
-		{
-			// ì²« í”„ë ˆì„ì˜ ì´ë¯¸ì§€ ì •ë³´ë§Œ ì €ì¥
+			// Ã¹ ÇÁ·¹ÀÓÀÇ ÀÌ¹ÌÁö Á¤º¸¸¸ ÀúÀå (´Ù¸¥ ÀÌ¹ÌÁöµéÀº ³ôÀÌ°¡ ´Ş¶ó¼­ ¶¥ ¾Æ·¡·Î ¶³¾îÁú ¼ö ÀÖÀ½)
 			D3DXGetImageInfoFromFile(FileName, &imagesinfo);
-		}
+		
 	}
-	// ì¶©ëŒ ì˜ì—­ ì„¤ì •
-	m_rc.left = pos.x;
-	m_rc.top = pos.y;
-	m_rc.right = pos.x + imagesinfo.Width ;
-	m_rc.bottom = pos.y + imagesinfo.Height ;
+	// Ãæµ¹ ¿µ¿ª ¼³Á¤
+	m_rcEnemy.left = pos.x;
+	m_rcEnemy.top = pos.y;
+	m_rcEnemy.right = pos.x + imagesinfo.Width ;
+	m_rcEnemy.bottom = pos.y + imagesinfo.Height ;
 
 }
 
 void Enemy::Update()
 {
-	// ì¶©ëŒ ì—…ë°ì´íŠ¸ (10ms ê°„ê²©ìœ¼ë¡œ ì œì–´)
+	// Ãæµ¹ ¾÷µ¥ÀÌÆ® (10ms °£°İÀ¸·Î Á¦¾î)
 	if (GetTickCount64() - m_PlayTime > 10)
 	{
-		if (!grounded) pos.y += gravity; // ì¤‘ë ¥ ì ìš©
-		// ë°”ë‹¥ ì¶©ëŒ
-		if (m_rc.left < coll.m_rc.right && coll.m_rc.left < m_rc.right && m_rc.top < coll.m_rc.bottom && coll.m_rc.top < m_rc.bottom) grounded = true;
-		if (map.m_Stage == 4) // ìŠ¤í…Œì´ì§€ 4
+		if (!grounded) pos.y += gravity; // Áß·Â Àû¿ë
+		// ¹Ù´Ú Ãæµ¹
+		if (m_rcEnemy.left < coll.m_rc.right
+			&& coll.m_rc.left < m_rcEnemy.right
+			&& m_rcEnemy.top < coll.m_rc.bottom
+			&& coll.m_rc.top < m_rcEnemy.bottom)
+			grounded = true;
+
+		if (map.m_Stage == 4) // ½ºÅ×ÀÌÁö 4
 		{
-			if (m_rc.left < coll.m_rc.right && coll.m_rc.left < m_rc.right && m_rc.top < coll.m_rc.bottom && coll.m_rc.top-10 < m_rc.bottom) grounded = true;
+			if (m_rcEnemy.left < coll.m_rc.right 
+				&& coll.m_rc.left < m_rcEnemy.right && m_rcEnemy.top < coll.m_rc.bottom && coll.m_rc.top-10 < m_rcEnemy.bottom) grounded = true;
 		}
-		if (map.m_Stage == 2) // ìŠ¤í…Œì´ì§€ 2
+		if (map.m_Stage == 2) // ½ºÅ×ÀÌÁö 2
 		{
-			if (m_rc.left < coll.m_rc_Up.right && coll.m_rc_Up.left < m_rc.right && m_rc.top < coll.m_rc_Up.bottom && coll.m_rc_Up.top  < m_rc.bottom) grounded = true;
-			if (m_rc.left < coll.m_rc_Under.right && coll.m_rc_Under.left < m_rc.right && m_rc.top < coll.m_rc_Under.bottom && coll.m_rc_Under.top  < m_rc.bottom) grounded = true;
+			if (m_rcEnemy.left < coll.m_rc_Up.right && coll.m_rc_Up.left < m_rcEnemy.right && m_rcEnemy.top < coll.m_rc_Up.bottom && coll.m_rc_Up.top  < m_rcEnemy.bottom) grounded = true;
+			if (m_rcEnemy.left < coll.m_rc_Under.right && coll.m_rc_Under.left < m_rcEnemy.right && m_rcEnemy.top < coll.m_rc_Under.bottom && coll.m_rc_Under.top  < m_rcEnemy.bottom) grounded = true;
 		}
 
 
-		// ì ì˜ ì¶©ëŒì˜ì—­ê³¼ ì´ì•Œ ì¶©ëŒ ê²€ì‚¬
-		if (m_rc.left+60  < bullet.m_rc_Bullet.right && bullet.m_rc_Bullet.left < m_rc.right+20 && m_rc.top+40  < bullet.m_rc_Bullet.bottom && bullet.m_rc_Bullet.top < m_rc.bottom)
+		// ÀûÀÇ Ãæµ¹¿µ¿ª°ú ÃÑ¾Ë Ãæµ¹ °Ë»ç
+		if (m_rcEnemy.left+60  < bullet.m_rc_Bullet.right 
+			&& bullet.m_rc_Bullet.left < m_rcEnemy.right+20 
+			&& m_rcEnemy.top+40  < bullet.m_rc_Bullet.bottom 
+			&& bullet.m_rc_Bullet.top < m_rcEnemy.bottom)
 		{
-			ScoreScreen = true; // ì ìˆ˜ í™”ë©´ í‘œì‹œ
-			isHit = true; // í”¼ê²©
+			ScoreScreen = true; // Á¡¼ö È­¸é Ç¥½Ã
+			isHit = true; // ÇÇ°İ
 			state = STATE_HIT;
-			m_CurrentFrame = 2; // HIT ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘ 
+			m_CurrentFrame = 2; // HIT ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÀÛ 
 
-			Alphastate = true; //íˆ¬ëª…ë„ íš¨ê³¼ ì‹œì‘
-			AlphaTime = GetTickCount64();// íˆ¬ëª…ë„ íš¨ê³¼ ì‹œì‘ ì‹œê°„ ê¸°ë¡
+			Alphastate = true; //Åõ¸íµµ È¿°ú ½ÃÀÛ
+			AlphaTime = GetTickCount64();// Åõ¸íµµ È¿°ú ½ÃÀÛ ½Ã°£ ±â·Ï
 		}
 
-		// ì¶©ëŒ ì˜ì—­ ì—…ë°ì´íŠ¸
-		m_rc.left = pos.x;
-		m_rc.top = pos.y;
-		m_rc.right = pos.x + imagesinfo.Width + 10;
-		m_rc.bottom = pos.y + imagesinfo.Height+30;
+		// Ãæµ¹ ¿µ¿ª ¾÷µ¥ÀÌÆ®
+		m_rcEnemy.left = pos.x;
+		m_rcEnemy.top = pos.y;
+		m_rcEnemy.right = pos.x + imagesinfo.Width + 10;
+		m_rcEnemy.bottom = pos.y + imagesinfo.Height+30;
 
 		m_PlayTime = GetTickCount64(); 
 	}
 
-	// ì• ë‹ˆë©”ì´ì…˜ í”„ë ˆì„ ë³€ê²½ (m_FrameDelay ê°„ê²©)
+	// ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ º¯°æ (m_FrameDelay °£°İ)
 	if (GetTickCount64() - m_AnimTime > m_FrameDelay)
 	{
-		if (state == STATE_IDLE) // Idle ìƒíƒœ ì• ë‹ˆë©”ì´ì…˜, ë°˜ë³µ
-		{
-			m_CurrentFrame++;
-			if (m_CurrentFrame > 1) m_CurrentFrame = 0; 
-		}
-		else if (state == STATE_HIT) // Hit ìƒíƒœ ì• ë‹ˆë©”ì´ì…˜, ë°˜ë³µ
+		if (state == STATE_IDLE) // Idle »óÅÂ ¾Ö´Ï¸ŞÀÌ¼Ç, ¹İº¹
+			m_CurrentFrame = (m_CurrentFrame + 1) % 2; // ³ª¸ÓÁö ¿¬»êÀ¸·Î 0
+		
+		else if (state == STATE_HIT) // Hit »óÅÂ ¾Ö´Ï¸ŞÀÌ¼Ç, ¹İº¹
 		{
 			m_CurrentFrame++;
 			if (m_CurrentFrame > 4) m_CurrentFrame = 2;
 		}
-		m_AnimTime = GetTickCount64(); // ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ ì—…ë°ì´íŠ¸
+		m_AnimTime = GetTickCount64(); // ¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ ¾÷µ¥ÀÌÆ®
 	}
 
-	// í”¼ê²© í›„ íˆ¬ëª…ë„ ê°ì†Œ 
+	// ÇÇ°İ ÈÄ Åõ¸íµµ °¨¼Ò 
 	if (Alphastate && GetTickCount64() - AlphaTime > 100)
 	{
 		Alpha -= 25;
@@ -122,8 +128,8 @@ void Enemy::Update()
 		AlphaTime = GetTickCount64(); 
 	}
 
-	// TNT í­ë°œì— ì˜í•œ í”¼ê²© ì²˜ë¦¬
-	if (block.isTNThit && state != STATE_HIT) // TNTê°€ í­ë°œí–ˆê³ , ì•„ì§ ì£½ì§€ ì•Šì•˜ë‹¤ë©´
+	// TNT Æø¹ß¿¡ ÀÇÇÑ ÇÇ°İ Ã³¸®
+	if (block.isTNThit && state != STATE_HIT) // TNT°¡ Æø¹ßÇß°í, ¾ÆÁ÷ Á×Áö ¾Ê¾Ò´Ù¸é
 	{
 		state = STATE_HIT;
 		m_CurrentFrame = 2;
@@ -134,10 +140,10 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	// ê²Œì„ ì‹œì‘ ìƒíƒœì¼ ë•Œë§Œ ë Œë”ë§
+	// °ÔÀÓ ½ÃÀÛ »óÅÂÀÏ ¶§¸¸ ·»´õ¸µ
 	if (Gmanager.m_GameStart)
 	{
-		// í”¼ê²© í›„ Alpha ê°’ ê°ì†Œ
+		// ÇÇ°İ ÈÄ Alpha °ª °¨¼Ò
 		Enemies[m_CurrentFrame].Render(pos.x, pos.y, 0, 2, 2, 0, D3DCOLOR_ARGB(Alpha, 255, 255, 255) );
 	}
 }

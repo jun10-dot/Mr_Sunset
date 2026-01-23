@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 
 Over::Over()
@@ -11,7 +11,7 @@ Over::~Over()
 
 void Over::Init()
 {
-	// ê²Œì„ ì˜¤ë²„ ë°°ê²½ ì´ë¯¸ì§€ ë¡œë“œ
+	// °ÔÀÓ ¿À¹ö ¹è°æ ÀÌ¹ÌÁö ·Îµå
 	overimg.Create("./resource/Img/over.png", false, D3DCOLOR_XRGB(0, 0, 0));
 }
 
@@ -22,35 +22,34 @@ void Over::Update(double frame)
 
 void Over::Draw()
 {
-	// ë°°ê²½ ì´ë¯¸ì§€ ë Œë”ë§ (0.75ë°° ì¶•ì†Œ)
+	// ¹è°æ ÀÌ¹ÌÁö ·»´õ¸µ (0.75¹è Ãà¼Ò)
 	overimg.Render(-50, 0, 0, 0.75, 0.75);
-	// ìµœì¢… ì ìˆ˜ ì¶œë ¥
+	// ÃÖÁ¾ ´©Àû Á¡¼ö Ãâ·Â
 	dv_font.DrawString("SCORE :", 530, 550, Gmanager.DrawTotal); 
-	// ì»¤ì„œ í‘œì‹œ
+	// Ä¿¼­ Ç¥½Ã
 	Gmanager.SetCursorVisible(TRUE);
-	// ì´ í”Œë ˆì´ ì‹œê°„ 
+	// ÃÑ ÇÃ·¹ÀÌ ½Ã°£ 
     totalTime = Gmanager.m_GamePlayTime;
-	// ë§Œì•½ íƒ€ì´ë¨¸ê°€ ì•„ì§ ì‘ë™ ì¤‘ì´ì—ˆë‹¤ë©´
-	if (Gmanager.m_TimerRunning) {
-		totalTime += GetTickCount64() - Gmanager.GameTime; // í˜„ì¬ê¹Œì§€ì˜ ê²½ê³¼ ì‹œê°„ì„ ëˆ„ì 
-	}
-    seconds = totalTime / 1000;  // ë°€ë¦¬ì´ˆ(ms)ì´ê¸°ë•Œë¬¸ì— ì´ˆ ë‹¨ìœ„ë¡œ ë³€í™˜
+	// ¸¸¾à Å¸ÀÌ¸Ó°¡ ¾ÆÁ÷ ÀÛµ¿ ÁßÀÌ¾ú´Ù¸é
+	if (Gmanager.m_TimerRunning) 
+		totalTime += GetTickCount64() - Gmanager.GameTime; // ÇöÀç±îÁöÀÇ °æ°ú ½Ã°£À» ´©Àû
+	
+    seconds = totalTime / 1000;  // ¹Ğ¸®ÃÊ(ms)ÀÌ±â¶§¹®¿¡ ÃÊ ´ÜÀ§·Î º¯È¯
 	char timeText[64];
 	
-	// ì‹œê°„ì„ ë¶„ : ì´ˆ í˜•íƒœë¡œ ì„¸íŒ…
+	// ½Ã°£À» ºĞ : ÃÊ ÇüÅÂ·Î ¼¼ÆÃ
 	if (seconds >= 60)
 	{
-	    minutes = seconds / 60;  // ë¶„ ë‹¨ìœ„ë¡œ ë³€í™˜	
-		seconds %= 60;  // ë‚˜ë¨¸ì§€ ì´ˆ ê³„ì‚°
-		sprintf(timeText, "TIME : %dë¶„ %uì´ˆ",minutes,seconds);
+	    minutes = seconds / 60;  // ºĞ ´ÜÀ§·Î º¯È¯	
+		seconds %= 60;  // ³ª¸ÓÁö ÃÊ °è»ê
+		sprintf(timeText, "TIME : %dºĞ %uÃÊ",minutes,seconds);
 	}
 	else
-	{
-		sprintf(timeText, "TIME : %uì´ˆ", seconds); // 60ì´ˆ ë¯¸ë§Œì´ë©´ ì´ˆë§Œ ì¶œë ¥ 
-	}
-	// í”Œë ˆì´ ì‹œê°„ ì¶œë ¥
+		sprintf(timeText, "TIME : %uÃÊ", seconds); // 60ÃÊ ¹Ì¸¸ÀÌ¸é ÃÊ¸¸ Ãâ·Â 
+	
+	// ÇÃ·¹ÀÌ ½Ã°£ Ãâ·Â
 	dv_font.DrawString(timeText, 530, 600);
-	// ë©”ë‰´ë¡œ ëŒì•„ê°€ëŠ” ë²„íŠ¼ ì´ë¯¸ì§€ ë Œë”ë§
+	// ¸Ş´º·Î µ¹¾Æ°¡´Â ¹öÆ° ÀÌ¹ÌÁö ·»´õ¸µ
 	map.m_Menu.Render(map.posX + 1230,map. posY + 720, 0, 1, 1);
 }
 
@@ -58,15 +57,15 @@ void Over::OnMessage( MSG* msg )
 {
 	switch (msg->message)
 	{
-	case WM_LBUTTONDOWN: // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ í´ë¦­
-		// ë©”ë‰´ ë²„íŠ¼ (ì¶©ëŒ ì˜ì—­)
+	case WM_LBUTTONDOWN: // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° Å¬¸¯
+		// ¸Ş´º ¹öÆ° (Ãæµ¹ ¿µ¿ª)
 		if (1217 <= MouseX && 1262 >= MouseX && 684 <= MouseY && 726 >= MouseY)
 		{
 			msg->message = 0; 
-			// ê²Œì„ ìƒíƒœ ì´ˆê¸°í™”
+			// °ÔÀÓ »óÅÂ ÃÊ±âÈ­
 			Gmanager.DrawTotal = 0;
 			Gmanager.m_GamePlayTime = 0;
-			// ë©”ë‰´ í™”ë©´ìœ¼ë¡œ ì „í™˜
+			// ¸Ş´º È­¸éÀ¸·Î ÀüÈ¯
 			Gmanager.Prvchap();
 		}
 		break;

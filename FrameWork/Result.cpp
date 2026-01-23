@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 Result result;
 
@@ -19,7 +19,7 @@ void Result::Init()
 	Nextmap = false;
 	Again = false;
 
-	// ì ìˆ˜ ì´ë¯¸ì§€ ë¦¬ì†ŒìŠ¤ 4ê°œë¥¼ ë¡œë“œí•©ë‹ˆë‹¤.
+	// Á¡¼ö ÀÌ¹ÌÁö ¸®¼Ò½º 4°³¸¦ ·ÎµåÇÕ´Ï´Ù.
 	for (int i = 0; i < 4; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/scorescreen/ScoreScreen-%04d.png",i);
@@ -30,49 +30,44 @@ void Result::Init()
 
 void Result::Draw()
 {
-	// ì ìˆ˜ í™”ë©´ì„ í‘œì‹œí•  ì¤€ë¹„ê°€ ì•ˆ ë˜ì—ˆìœ¼ë©´ í•¨ìˆ˜ ì¢…ë£Œ
+	// Á¡¼ö È­¸éÀ» Ç¥½ÃÇÒ ÁØºñ°¡ ¾È µÇ¾úÀ¸¸é ÇÔ¼ö Á¾·á
 	if (!canShow) return;
 	
-	//ì  ë¦¬ìŠ¤íŠ¸ë¥¼ ìˆœíšŒí•˜ë©° ì‚´ì•„ìˆëŠ” ì ì´ ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
+	//Àû ¸®½ºÆ®¸¦ ¼øÈ¸ÇÏ¸ç »ì¾ÆÀÖ´Â ÀûÀÌ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
 	for (auto enemy : Gmanager.myList)
 	{
-		if (!enemy->isDead)  // ì£½ì§€ ì•Šì€ ì  ë°œê²¬ ì‹œ
+		if (!enemy->isDead)
 		{
-			aliveEnemyExists = true; // ì‚´ì•„ìˆëŠ” ì  ì¡´ì¬ í”Œë˜ê·¸ ì„¤ì •
-			break;
+			aliveEnemyExists = true;
+			break; // ÇÑ ¸¶¸®¶óµµ »ì¾ÆÀÖ´Ù¸é ·çÇÁ Å»Ãâ
 		}
 	}
 
 	//---------------------------------------------------------------------
-	// ìŠ¹ë¦¬ ì¡°ê±´ ê²€ì‚¬ ë¡œì§
-	// 1. ì  ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ìˆê³  
-	// 2. ì‚´ì•„ìˆëŠ” ì ì´ ì—†ëŠ” ê²½ìš° 
-	if (Gmanager.myList.empty() || !aliveEnemyExists)  // ì  ë‹¤ ì£½ì—ˆê±°ë‚˜
+	// ½Â¸® Á¶°Ç °Ë»ç ·ÎÁ÷
+	// Àû Àü¸ê ½Ã ÀÜ¿© ÅºÈ¯ ¼ö¿¡ µû¶ó Á¡¼ö Â÷µî ·»´õ¸µ 
+	if (Gmanager.myList.empty() || !aliveEnemyExists)
 	{
 		if (BulletCount <= 2)
-		{
-			Score[0].Render(posX + 300, posY, 0, 1, 1); //ìŠ¤ì½”ì–´ 3ì  (ë§Œì )
-		}
+			Score[0].Render(posX + 300, posY, 0, 1, 1); //½ºÄÚ¾î 3Á¡
+
 		else if (BulletCount <= 4)
-		{
-			Score[1].Render(posX + 300, posY, 0, 1, 1); //ìŠ¤ì½”ì–´ 2ì 
-		}
+			Score[1].Render(posX + 300, posY, 0, 1, 1); //½ºÄÚ¾î 2Á¡
+
 		else if (BulletCount <= 6)
-		{
-			Score[2].Render(posX + 300, posY, 0, 1, 1); //ìŠ¤ì½”ì–´ 1ì 
-		}
-		Nextmap = true; // ë‹¤ìŒë§µìœ¼ë¡œ ì´ë™í•˜ë„ë¡ í”Œë˜ê·¸ ì„¤ì •
+			Score[2].Render(posX + 300, posY, 0, 1, 1); //½ºÄÚ¾î 1Á¡
+
+		Nextmap = true; // ´ÙÀ½¸ÊÀ¸·Î ÀÌµ¿ÇÏµµ·Ï ÇÃ·¡±× ¼³Á¤
 	}
 	//--------------------------------------------------------------------- 
-	// ì‹¤íŒ¨ ì¡°ê±´ ê²€ì‚¬ ë¡œì§
-	// 1. ì´ì•Œ 6ë°œ ëª¨ë‘ ì‚¬ìš©í–ˆê³ 
-	// 2. ì‚´ì•„ìˆëŠ” ì ì´ ë‚¨ì•„ ìˆìœ¼ë©° 
-	// 3. í˜„ì¬ ì´ì•Œì„ ë°œì‚¬ ì¤‘ì´ ì•„ë‹Œ ê²½ìš° 
-	else if (BulletCount == 6 && aliveEnemyExists && !isFireBullet)  // ì  ë‚¨ì•˜ê³  6ë°œ ë‹¤ ì“´ ê²½ìš°
+	// ½ÇÆĞ Á¶°Ç °Ë»ç ·ÎÁ÷
+	// 1. ÃÑ¾Ë 6¹ß ¸ğµÎ »ç¿ëÇß°í
+	// 2. »ì¾ÆÀÖ´Â ÀûÀÌ ³²¾Æ ÀÖÀ¸¸ç 
+	// 3. ÇöÀç ÃÑ¾Ë ¹ß»ç ÁßÀÌ ¾Æ´Ñ °æ¿ì 
+	else if (BulletCount == 6 && aliveEnemyExists && !isFireBullet)
 	{
-		Score[3].Render(posX + 300, posY, 0, 1, 1); // ì‹¤íŒ¨ í™”ë©´ í‘œì‹œ
-		
-		Again = true;
+		Score[3].Render(posX + 300, posY, 0, 1, 1); // ½ÇÆĞ È­¸é Ç¥½Ã
+		Again = true; // Àç½ÃÀÛ ÇÃ·¡±× È°¼ºÈ­
 	}
 }
 

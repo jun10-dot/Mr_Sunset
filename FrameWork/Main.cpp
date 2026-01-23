@@ -1,4 +1,4 @@
-ï»¿
+
 #include "Include.h" 
 HWND g_hWnd = NULL;
 const int TICKS_PER_SECOND = 60; 
@@ -7,13 +7,13 @@ const int MAX_FRAMESKIP = 5;
 int loops;
 float interpolation;
 
-/// ì‚¬ìš©ì ì •ì˜ ///
-float MouseX = 0; // í˜„ì¬ ë§ˆìš°ìŠ¤ X ì¢Œí‘œ
-float MouseY = 0; // í˜„ì¬ ë§ˆìš°ìŠ¤ Y ì¢Œí‘œ
+/// »ç¿ëÀÚ Á¤ÀÇ ///
+float MouseX = 0; // ÇöÀç ¸¶¿ì½º X ÁÂÇ¥
+float MouseY = 0; // ÇöÀç ¸¶¿ì½º Y ÁÂÇ¥
 
-int BulletCount = 0; // ì‚¬ìš©ëœ ì´ì•Œ ê°œìˆ˜
-bool isFireBullet = false; // ì´ì•Œì´ í˜„ì¬ ë°œì‚¬ë˜ì–´ ë‚ ì•„ê°€ëŠ”ì§€ì— ëŒ€í•œ ì—¬ë¶€
-bool BulletSound = false; // ì´ì•Œ ë°œì‚¬ ì‚¬ìš´ë“œ ì¬ìƒ í”Œë˜ê·¸
+int BulletCount = 0; // »ç¿ëµÈ ÃÑ¾Ë °³¼ö
+bool isFireBullet = false; // ÃÑ¾ËÀÌ ÇöÀç ¹ß»çµÇ¾î ³¯¾Æ°¡´ÂÁö¿¡ ´ëÇÑ ¿©ºÎ
+bool BulletSound = false; // ÃÑ¾Ë ¹ß»ç »ç¿îµå Àç»ı ÇÃ·¡±×
 /// ///////////////
 
 LRESULT CALLBACK WndProc( HWND g_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
@@ -46,7 +46,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	
 
 
-	// WS_POPUP ë¹¼ë©´ í…Œíˆ¬ë¦¬ê°€ ìƒê¸´ë‹¤
+	// WS_POPUP »©¸é Å×Åõ¸®°¡ »ı±ä´Ù
 	g_hWnd = CreateWindowEx( NULL, wc.lpszClassName, 
 		"Game", 
 		WS_EX_TOPMOST, 
@@ -123,54 +123,54 @@ LRESULT CALLBACK WndProc( HWND g_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 		Gmanager.SetCursorVisible(FALSE);
 		break;
     
-	////// ì‚¬ìš©ì ì •ì˜ //////
+	////// »ç¿ëÀÚ Á¤ÀÇ //////
  	case WM_MOUSEMOVE:
-		MouseX = LOWORD(lParam); // ë§ˆìš°ìŠ¤ X ì¢Œí‘œ ë°›ì•„ì˜¤ê¸°
-		MouseY = HIWORD(lParam); // ë§ˆìš°ìŠ¤ Y ì¢Œí‘œ ë°›ì•„ì˜¤ê¸°
+		MouseX = LOWORD(lParam); // ¸¶¿ì½º X ÁÂÇ¥ ¹Ş¾Æ¿À±â
+		MouseY = HIWORD(lParam); // ¸¶¿ì½º Y ÁÂÇ¥ ¹Ş¾Æ¿À±â
 		break;
     
-	case WM_LBUTTONDOWN: // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ ëˆŒë¦¼ ì´ë²¤íŠ¸
-		// ì‚¬ìš´ë“œ ë²„íŠ¼ ì¶©ëŒ ì˜ì—­
+	case WM_LBUTTONDOWN: // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° ´­¸² ÀÌº¥Æ®
+		// »ç¿îµå ¹öÆ° Ãæµ¹ ¿µ¿ª
 		 if (1032 <= MouseX && 1067 >= MouseX && 690 <= MouseY && 722 >= MouseY)
 		 {
-			 sound.isMuted = !sound.isMuted; // ìŒì†Œê±° ìƒíƒœ ë°˜ì „
+			 sound.isMuted = !sound.isMuted; // À½¼Ò°Å »óÅÂ ¹İÀü
 
 			 if (sound.isMuted)
 			 {
-				 sound.StopAll(); // ëª¨ë“  ì‚¬ìš´ë“œ ì¤‘ì§€
+				 sound.StopAll(); // ¸ğµç »ç¿îµå ÁßÁö
 			 }
 			 else
 			 {
-				 sound.soundinit = false; // ì‚¬ìš´ë“œ ì´ˆê¸°í™”
+				 sound.soundinit = false; // »ç¿îµå ÃÊ±âÈ­
 			 }
 			 break;
 		 }
 		if (1158 <= MouseX && MouseX <= 1200 && 687 <= MouseY && MouseY <= 723) 
-			break; // íŠ¹ì • ì˜ì—­ í´ë¦­ì‹œ ì´ë²¤íŠ¸ ë¬´ì‹œ 
+			break; // Æ¯Á¤ ¿µ¿ª Å¬¸¯½Ã ÀÌº¥Æ® ¹«½Ã 
 		if (1094 <= MouseX && 1135 >= MouseX && 685 <= MouseY && 722 >= MouseY)
-			break; // íŠ¹ì • ì˜ì—­ í´ë¦­ì‹œ ì´ë²¤íŠ¸ ë¬´ì‹œ 
+			break; // Æ¯Á¤ ¿µ¿ª Å¬¸¯½Ã ÀÌº¥Æ® ¹«½Ã 
 		
-		if (isFireBullet) //ë§Œì•½ ì´ì•Œ ë°œì‚¬ì¤‘ì¼ë•Œ
-			break; // ì—°ì† ë°œì‚¬ ë°©ì§€
+		if (isFireBullet) //¸¸¾à ÃÑ¾Ë ¹ß»çÁßÀÏ¶§
+			break; // ¿¬¼Ó ¹ß»ç ¹æÁö
 		   
-		if (BulletCount >= 6) // ì´ì•Œ 6ë°œì„ ëª¨ë‘ ì‚¬ìš©í–ˆì„ ë•Œ 
-			break; // ë°œì‚¬ ì œí•œ
+		if (BulletCount >= 6) // ÃÑ¾Ë 6¹ßÀ» ¸ğµÎ »ç¿ëÇßÀ» ¶§ 
+			break; // ¹ß»ç Á¦ÇÑ
 		
-		if (Gmanager.myList.empty()) //ì ì´ ëª¨ë‘ ì£½ì—ˆë‹¤ë©´
+		if (Gmanager.myList.empty()) //ÀûÀÌ ¸ğµÎ Á×¾ú´Ù¸é
 		{
-			isFireBullet = false; //ì´ì•Œ ë°œì‚¬ ë©ˆì¶¤
-			break; // ë°œì‚¬ ì œí•œ
+			isFireBullet = false; //ÃÑ¾Ë ¹ß»ç ¸ØÃã
+			break; // ¹ß»ç Á¦ÇÑ
 		}
 		   
 		
 
-		isFireBullet = true; // ì´ì•Œ ë°œì‚¬ ì‹œì‘
+		isFireBullet = true; // ÃÑ¾Ë ¹ß»ç ½ÃÀÛ
 		if (!sound.isMuted)
-		BulletSound = true; // ì‚¬ìš´ë“œ ì¬ìƒ í”Œë˜ê·¸ ON
+		BulletSound = true; // »ç¿îµå Àç»ı ÇÃ·¡±× ON
 
-		bullet.Fire(MouseX, MouseY); // ì´ì•Œ ë°œì‚¬ í•¨ìˆ˜ í˜¸ì¶œ
+		bullet.Fire(MouseX, MouseY); // ÃÑ¾Ë ¹ß»ç ÇÔ¼ö È£Ãâ
 
-		BulletCount++; // ì‚¬ìš©ëœ ì´ì•Œ ê°œìˆ˜ ì¦ê°€
+		BulletCount++; // »ç¿ëµÈ ÃÑ¾Ë °³¼ö Áõ°¡
 		break;
 	}
 	//////////////////////////

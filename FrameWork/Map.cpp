@@ -1,10 +1,10 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 Map map;
 
 Map::Map()
 {
-	m_Stage = 1; // ì´ˆê¸° ìŠ¤í…Œì´ì§€ëŠ” 1
+	m_Stage = 1; // ÃÊ±â ½ºÅ×ÀÌÁö´Â 1
 } 
 
 Map::~Map()
@@ -15,67 +15,67 @@ void Map::Init()
 {
 	char FileName[256];
 
-	// ê³µí†µ ë°°ê²½ ë° UI ì´ë¯¸ì§€ ë¡œë“œ //
+	// °øÅë ¹è°æ ¹× UI ÀÌ¹ÌÁö ·Îµå //
 
 	sprintf_s(FileName, "./resource/Img/Background-0001.png");
-	m_BackgroundImg.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ë°°ê²½
+	m_BackgroundImg.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ¹è°æ
 
 	sprintf_s(FileName, "./resource/Img/Exit.png");
-	m_Exit.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ì¢…ë£Œ ë²„íŠ¼
+	m_Exit.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // Á¾·á ¹öÆ°
 
 	sprintf_s(FileName, "./resource/Img/Reset.png");
-	m_Reset.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ë¦¬ì…‹ ë²„íŠ¼
+	m_Reset.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ¸®¼Â ¹öÆ°
 
 	sprintf_s(FileName, "./resource/Img/Menu.png");
-	m_Menu.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ë©”ë‰´ ë²„íŠ¼
+	m_Menu.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ¸Ş´º ¹öÆ°
 
 	for (int i = 0; i < 2; i++)
 	{
 	    sprintf_s(FileName, "./resource/Img/Audio/Audio-%04d.png", i);
-	    m_Sound[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // ì‚¬ìš´ë“œ On/Off ë²„íŠ¼
+	    m_Sound[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0)); // »ç¿îµå On/Off ¹öÆ°
     }
 
-	// ìŠ¤í…Œì´ì§€ë³„ ë§µ ì´ë¯¸ì§€ ë¡œë“œ //
+	// ½ºÅ×ÀÌÁöº° ¸Ê ÀÌ¹ÌÁö ·Îµå //
 	
-	//ë§µ ìŠ¤í…Œì´ì§€1
+	//¸Ê ½ºÅ×ÀÌÁö1
 	for (int i = 0; i < 3; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/map1/BackgroundA-%04d.png",i+1);
 		m_Stage1_Img[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
 	
-	//ë§µìŠ¤í…Œì´ì§€2
+	//¸Ê½ºÅ×ÀÌÁö2
 	for (int i = 0; i < 3; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/map2/BackgroundB-%04d.png", i);
 		m_Stage2_Img[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
 
-	//ë§µ ìŠ¤í…Œì´ì§€3
+	//¸Ê ½ºÅ×ÀÌÁö3
 	for (int i = 0; i < 2; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/map3/BackgroundC-%04d.png", i);
 		m_Stage3_Img[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
 
-	//ë§µ ìŠ¤í…Œì´ì§€4
+	//¸Ê ½ºÅ×ÀÌÁö4
 	for (int i = 0; i < 6; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/map4/BackgroundD-%04d.png", i);
 		m_Stage4_Img[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
 
-	// ë¦¬ì†ŒìŠ¤ ë¡œë“œ í›„, í”Œë ˆì´ì–´, ì  ë°°ì¹˜
+	// ¸®¼Ò½º ·Îµå ÈÄ, ÇÃ·¹ÀÌ¾î, Àû ¹èÄ¡
 	InitStage(); 
 }
 
-void Map::InitStage()  //ìºë¦­í„°ì™€ ì ì„ ë§µì— ë°°ì¹˜
+void Map::InitStage()  //Ä³¸¯ÅÍ¿Í ÀûÀ» ¸Ê¿¡ ¹èÄ¡
 {
 	switch (m_Stage)
 	{
 	case 1:
-		player.pos = { 250, 200 }; // í”Œë ˆì´ì–´ ì´ˆê¸° ìœ„ì¹˜ ì„¤ì •
-		AddEnemy(950, 470); // ì  ìƒì„± ë° ë°°ì¹˜
+		player.pos = { 250, 200 }; // ÇÃ·¹ÀÌ¾î ÃÊ±â À§Ä¡ ¼³Á¤
+		AddEnemy(950, 470); // Àû »ı¼º ¹× ¹èÄ¡
 		break;
 	case 2:
 		player.pos = { 700, 600 };
@@ -85,6 +85,11 @@ void Map::InitStage()  //ìºë¦­í„°ì™€ ì ì„ ë§µì— ë°°ì¹˜
 	case 3:
 		player.pos = { 150, 300 };
 		AddEnemy(500, 500);
+		AddEnemy(400, 500);
+		AddEnemy(300, 500);
+		AddEnemy(200, 500);
+		AddEnemy(600, 500);
+		AddEnemy(700, 500);
 		AddEnemy(1000, 500);
 		break;
 
@@ -96,64 +101,64 @@ void Map::InitStage()  //ìºë¦­í„°ì™€ ì ì„ ë§µì— ë°°ì¹˜
 	}
 }
 
-//ì  ìƒì„± í•¨ìˆ˜
+//Àû »ı¼º ÇÔ¼ö
 void Map::AddEnemy(int x, int y)  
 {
-	Enemy* e = new Enemy(x, y); // Enemy ê°ì²´ ë™ì  í• ë‹¹
-	e->Init(); // Enemy ê°ì²´ ì´ˆê¸°í™”
-	Gmanager.myList.push_front(e); // ë¦¬ìŠ¤íŠ¸ì˜ ë§¨ ì•ì— ì¶”ê°€
+	Enemy* e = new Enemy(x, y); // Enemy °´Ã¼ µ¿Àû ÇÒ´ç
+	e->Init(); // Enemy °´Ã¼ ÃÊ±âÈ­
+	Gmanager.myList.push_front(e); // ¸®½ºÆ®ÀÇ ¸Ç ¾Õ¿¡ Ãß°¡
 }
 
 void Map::Draw()
 {
-	// ê³µí†µ ë°°ê²½ ì´ë¯¸ì§€ ë Œë”ë§
+	// °øÅë ¹è°æ ÀÌ¹ÌÁö ·»´õ¸µ
 	if (m_Stage >= 1 && m_Stage <= 4)
 	{
 		m_BackgroundImg.Render(posX, posY, 0, 1, 1);
 	}
 
-	// ìŠ¤í…Œì´ì§€ë³„ ì „ìš© ì´ë¯¸ì§€ ë Œë”ë§
+	// ½ºÅ×ÀÌÁöº° Àü¿ë ÀÌ¹ÌÁö ·»´õ¸µ
 	switch (m_Stage)
 	{
 	case 1:
-		m_Stage1_Img[0].Render(posX, posY, 0, 1, 1); // ì²œì¥
-		m_Stage1_Img[1].Render(posX, posY + 605, 0, 1, 1); // ë°”ë‹¥
-		m_Stage1_Img[2].Render(posX + 540, posY + 285, 0, 1, 1); // ì¤‘ì•™ ë²½
+		m_Stage1_Img[0].Render(posX, posY, 0, 1, 1); // ÃµÀå
+		m_Stage1_Img[1].Render(posX, posY + 605, 0, 1, 1); // ¹Ù´Ú
+		m_Stage1_Img[2].Render(posX + 540, posY + 285, 0, 1, 1); // Áß¾Ó º®
 			break;
 
 	case 2:
-		m_Stage2_Img[0].Render(posX, posY + 670, 0, 1, 1); // ë°”ë‹¥
-		m_Stage2_Img[1].Render(posX, posY, 0, 1, 1);  // ì™¼ìª½ ë²½
-		m_Stage2_Img[1].Render(posX + 1000, posY, 0, 1, 1); // ì˜¤ë¥¸ìª½ ë²½
+		m_Stage2_Img[0].Render(posX, posY + 670, 0, 1, 1); // ¹Ù´Ú
+		m_Stage2_Img[1].Render(posX, posY, 0, 1, 1);  // ¿ŞÂÊ º®
+		m_Stage2_Img[1].Render(posX + 1000, posY, 0, 1, 1); // ¿À¸¥ÂÊ º®
 
-		m_Stage2_Img[2].Render(posX + 280, posY + 420, 0, 1, 1); // ì•„ë˜ ê°€ë¡œë¸”ëŸ­
-		m_Stage2_Img[2].Render(posX + 450, posY + 150, 0, 1, 1, 0); // ìœ„ ê°€ë¡œë¸”ëŸ­
+		m_Stage2_Img[2].Render(posX + 280, posY + 420, 0, 1, 1); // ¾Æ·¡ °¡·Îºí·°
+		m_Stage2_Img[2].Render(posX + 450, posY + 150, 0, 1, 1, 0); // À§ °¡·Îºí·°
 			break;
 
 
 	case 3:
-		m_Stage3_Img[0].Render(posX, posY + 670, 0, 1, 1); // ë°”ë‹¥
-		// Collider í´ë˜ìŠ¤ì—ì„œ ì—…ë°ì´íŠ¸ ë˜ëŠ” ì›€ì§ì´ëŠ” ë²½ì˜ í˜„ì¬ ì¢Œí‘œë¥¼ ì§ì ‘ ë°›ì•„ ë Œë”ë§
-		m_Stage3_Img[1].Render(coll.wallXleftMove, coll.wallYleftMove, 0, 1, 1); // ì›€ì§ì´ëŠ” ì™¼ìª½ ë²½
-		m_Stage3_Img[1].Render(coll.wallXrightMove, coll.wallYrightMove, 0, 1, 1); // ì›€ì§ì´ëŠ” ì˜¤ë¥¸ìª½ ë²½
+		m_Stage3_Img[0].Render(posX, posY + 670, 0, 1, 1); // ¹Ù´Ú
+		// Collider Å¬·¡½º¿¡¼­ ¾÷µ¥ÀÌÆ® µÇ´Â ¿òÁ÷ÀÌ´Â º®ÀÇ ÇöÀç ÁÂÇ¥¸¦ Á÷Á¢ ¹Ş¾Æ ·»´õ¸µ
+		m_Stage3_Img[1].Render(coll.wallXleftMove, coll.wallYleftMove, 0, 1, 1); // ¿òÁ÷ÀÌ´Â ¿ŞÂÊ º®
+		m_Stage3_Img[1].Render(coll.wallXrightMove, coll.wallYrightMove, 0, 1, 1); // ¿òÁ÷ÀÌ´Â ¿À¸¥ÂÊ º®
 			break;
 
 	case 4:
-		m_Stage4_Img[0].Render(posX, posY + 670, 0, 1, 1); // ë°”ë‹¥
-		m_Stage4_Img[1].Render(posX - 20, posY, 0, 1, 1); // ì™¼ìª½ êµ¬ì¡°ë¬¼ ë²½
-		m_Stage4_Img[2].Render(posX + 370, posY + 168, 0, 1, 1); // ì™¼ìª½ ì‘ì€ë²½
-		m_Stage4_Img[4].Render(posX + 700, posY + 168, 0, 1, 1);// ì˜¤ë¥¸ìª½ ì‘ì€ë²½
-		m_Stage4_Img[5].Render(posX + 1000, posY, 0, 1, 1); // ì˜¤ë¥¸ìª½ êµ¬ì¡°ë¬¼ ë²½
-		m_Stage4_Img[3].Render(posX, posY, 0, 1, 1); // ì²œì¥
+		m_Stage4_Img[0].Render(posX, posY + 670, 0, 1, 1); // ¹Ù´Ú
+		m_Stage4_Img[1].Render(posX - 20, posY, 0, 1, 1); // ¿ŞÂÊ ±¸Á¶¹° º®
+		m_Stage4_Img[2].Render(posX + 370, posY + 168, 0, 1, 1); // ¿ŞÂÊ ÀÛÀºº®
+		m_Stage4_Img[4].Render(posX + 700, posY + 168, 0, 1, 1);// ¿À¸¥ÂÊ ÀÛÀºº®
+		m_Stage4_Img[5].Render(posX + 1000, posY, 0, 1, 1); // ¿À¸¥ÂÊ ±¸Á¶¹° º®
+		m_Stage4_Img[3].Render(posX, posY, 0, 1, 1); // ÃµÀå
 			break;
 	}
-	// UI ë²„íŠ¼ ë Œë”ë§ (ëª¨ë“  ìŠ¤í…Œì´ì§€ ê³µí†µ)
+	// UI ¹öÆ° ·»´õ¸µ (¸ğµç ½ºÅ×ÀÌÁö °øÅë)
 	if (m_Stage >= 1 && m_Stage <= 4)
 	{
 		m_Exit.Render(posX + 1230, posY + 720, 0, 1, 1);
 		m_Reset.Render(posX + 1170, posY + 720, 0, 1, 1);
 		m_Menu.Render(posX + 1110, posY + 723, 0, 1, 1); 
-		int index = sound.isMuted ? 1 : 0; // ì‚¬ìš´ë“œ ìƒíƒœì— ë”°ë¼ ë Œë”ë§
+		int index = sound.isMuted ? 1 : 0; // »ç¿îµå »óÅÂ¿¡ µû¶ó ·»´õ¸µ
 		m_Sound[index].Render(posX + 1044, posY + 721, 0, 1, 1);
 	}
 }

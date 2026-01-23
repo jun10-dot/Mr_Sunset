@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "Include.h"
 
 class Collider
@@ -8,28 +8,28 @@ class Collider
 public :
 	Collider();
 	~Collider();
-	int wallXleftMove; // ë§µ 3 ìŠ¤í…Œì´ì§€ì—ì„œ ì›€ì§ì´ëŠ” ì™¼ìª½ ë²½ì˜ X ì¢Œí‘œ
-	int wallYleftMove; // " " ì™¼ìª½ ë²½ì˜ Y ì¢Œí‘œ
-	int wallXrightMove; // " " ì˜¤ë¥¸ìª½ ë²½ì˜ X ì¢Œí‘œ
-	int wallYrightMove; // " " ì˜¤ë¥¸ìª½ ë²½ì˜ Y ì¢Œí‘œ
+	int wallXleftMove; // ¸Ê 3 ½ºÅ×ÀÌÁö¿¡¼­ ¿òÁ÷ÀÌ´Â ¿ÞÂÊ º®ÀÇ X ÁÂÇ¥
+	int wallYleftMove; // " " ¿ÞÂÊ º®ÀÇ Y ÁÂÇ¥
+	int wallXrightMove; // " " ¿À¸¥ÂÊ º®ÀÇ X ÁÂÇ¥
+	int wallYrightMove; // " " ¿À¸¥ÂÊ º®ÀÇ Y ÁÂÇ¥
 
-	// ìŠ¤í…Œì´ì§€ 1
-	RECT m_rc; //ë°”ë‹¥ ì¶©ëŒ ì˜ì—­ (ë°”ë‹¥ ìžˆëŠ” ëª¨ë“  ìŠ¤í…Œì´ì§€ì— ì ìš©)
-	RECT m_rc1; //ì²œìž¥ ì¶©ëŒ ì˜ì—­ (ìŠ¤í…Œì´ì§€ 1, 4)
-	RECT m_rc2; //ì¤‘ì•™ ë²½ ì¶©ëŒ ì˜ì—­ (ìŠ¤í…Œì´ì§€ 1, 2, 4)
+	// ½ºÅ×ÀÌÁö 1
+	RECT m_rc; //¹Ù´Ú Ãæµ¹ ¿µ¿ª (¹Ù´Ú ÀÖ´Â ¸ðµç ½ºÅ×ÀÌÁö¿¡ Àû¿ë)
+	RECT m_rc1; //ÃµÀå Ãæµ¹ ¿µ¿ª (½ºÅ×ÀÌÁö 1, 4)
+	RECT m_rc2; //Áß¾Ó º® Ãæµ¹ ¿µ¿ª (½ºÅ×ÀÌÁö 1, 2, 4)
 
-	// ìŠ¤í…Œì´ì§€ 2 
-	RECT m_rc2_1; //ë§µ ìŠ¤í…Œì´ì§€2 ë²½ (ìŠ¤í…Œì´ì§€ 2, 4)
-	RECT m_rc_Under; //ì•„ëž˜ ê°€ë¡œë¸”ëŸ­
-	RECT m_rc_Up; //ìœ„ ê°€ë¡œ ë¸”ëŸ­ 
+	// ½ºÅ×ÀÌÁö 2 
+	RECT m_rc2_1; //¸Ê ½ºÅ×ÀÌÁö2 º® (½ºÅ×ÀÌÁö 2, 4)
+	RECT m_rc_Under; //¾Æ·¡ °¡·Îºí·°
+	RECT m_rc_Up; //À§ °¡·Î ºí·° 
 
-	// ìŠ¤í…Œì´ì§€ 3 
-	RECT m_rc_Left; //ë§µ ìŠ¤í…Œì´ì§€3
-	RECT m_rc_Right;//ë§µ ìŠ¤í…Œì´ì§€3
+	// ½ºÅ×ÀÌÁö 3 
+	RECT m_rc_Left; //¸Ê ½ºÅ×ÀÌÁö3
+	RECT m_rc_Right;//¸Ê ½ºÅ×ÀÌÁö3
 
-	//ìŠ¤í…Œì´ì§€ 4 
-	RECT m_rcSleft; //ìž‘ì€ ì™¼ìª½ ì¤‘ì•™ ë²½
-	RECT m_rcSright; //ìž‘ì€ ì˜¤ë¥¸ìª½ ì¤‘ì•™ ë²½
+	//½ºÅ×ÀÌÁö 4 
+	RECT m_rcSleft; //ÀÛÀº ¿ÞÂÊ Áß¾Ó º®
+	RECT m_rcSright; //ÀÛÀº ¿À¸¥ÂÊ Áß¾Ó º®
 	void Init();
 	void Update();
 };

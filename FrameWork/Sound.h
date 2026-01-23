@@ -1,29 +1,29 @@
-ï»¿#pragma once
+#pragma once
 
 class Sound
 {
 private:
-	CSound* m_EnemyDieArray[4]; // ë‹¤ì¤‘ ì¬ìƒì„ ìœ„í•´ ë°°ì—´ ì„ ì–¸
+	CSound* m_EnemyDieArray[4]; // ´ÙÁß Àç»ıÀ» À§ÇØ ¹è¿­ ¼±¾ğ
 
 public:
 	Sound(void);
 	~Sound(void);
 	int m_EnemyDieIndex = 0;
 	
-    CSoundManager* g_pSoundManager; // DirectSound ê¸°ë°˜ ì‚¬ìš´ë“œ ê´€ë¦¬ì
-    CSound*	m_Bk1; // ë°°ê²½ ìŒì•…
-    CSound*	m_Shot; // í”Œë ˆì´ì–´ ì´ì•Œ ë°œì‚¬ ì‚¬ìš´ë“œ
-    CSound* m_GunShot; //ê²Œì„ ë¡œê³  í™”ë©´ ë°œì‚¬ ì‚¬ìš´ë“œ 
-    CSound* m_Boom; // í­ë°œ ì‚¬ìš´ë“œ
+    CSoundManager* g_pSoundManager; // DirectSound ±â¹İ »ç¿îµå °ü¸®ÀÚ
+    CSound*	m_Bk1; // ¹è°æ À½¾Ç
+    CSound*	m_Shot; // ÇÃ·¹ÀÌ¾î ÃÑ¾Ë ¹ß»ç »ç¿îµå
+    CSound* m_GunShot; //°ÔÀÓ ·Î°í È­¸é ¹ß»ç »ç¿îµå 
+    CSound* m_Boom; // Æø¹ß »ç¿îµå
 
-    bool soundinit; // ë°°ê²½ìŒì•… ì´ˆê¸° ì¬ìƒ ì—¬ë¶€ (ë¬´í•œ ë°˜ë³µ ì¬ìƒ)
-    bool isMuted; // ê²Œì„ ì „ì²´ ìŒì†Œê±° ìƒíƒœ í”Œë˜ê·¸
+    bool soundinit; // ¹è°æÀ½¾Ç ÃÊ±â Àç»ı ¿©ºÎ (¹«ÇÑ ¹İº¹ Àç»ı)
+    bool isMuted; // °ÔÀÓ ÀüÃ¼ À½¼Ò°Å »óÅÂ ÇÃ·¡±×
 
 	void Init();
 	void Update();
-	void StopAll(); // ëª¨ë“  ì‚¬ìš´ë“œ ì¬ìƒ ì¤‘ì§€ ë©”ì„œë“œ
-	void PlayGunShot(); //ë°œì‚¬ ì‚¬ìš´ë“œ ì¬ìƒ ë©”ì„œë“œ
+	void StopAll(); // ¸ğµç »ç¿îµå Àç»ı ÁßÁö ¸Ş¼­µå
+	void PlayGunShot(); //¹ß»ç »ç¿îµå Àç»ı ¸Ş¼­µå
 }; 
-extern HWND g_hWnd; // DirectSound ì´ˆê¸°í™”ì— í•„ìš”
-extern bool BulletSound; // ì´ì•Œ ë°œì‚¬ ìš”ì²­ í”Œë˜ê·¸
+extern HWND g_hWnd; // DirectSound ÃÊ±âÈ­¿¡ ÇÊ¿ä
+extern bool BulletSound; // ÃÑ¾Ë ¹ß»ç ¿äÃ» ÇÃ·¡±×
 extern Sound sound;

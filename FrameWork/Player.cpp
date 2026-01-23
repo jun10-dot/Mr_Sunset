@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 
 Player player;
@@ -15,83 +15,86 @@ Player::~Player()
 void Player::Init()
 {
 	isFireBullet = false;
-	gravity = 5.75f; // ì¤‘ë ¥ê°’ ì„¤ì •
+	gravity = 5.75f; // Áß·Â°ª ¼³Á¤
 	grounded = false;
 	m_CurrentFrame = 0;
-	m_AnimTime = GetTickCount64(); // í˜„ì¬ ì‹œê°„ìœ¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ íƒ€ì´ë¨¸ ì´ˆê¸°í™”
+	m_AnimTime = GetTickCount64(); // ÇöÀç ½Ã°£À¸·Î ¾Ö´Ï¸ŞÀÌ¼Ç Å¸ÀÌ¸Ó ÃÊ±âÈ­
 
 	char FileName[256];
 
-	// ìºë¦­í„° ì• ë‹ˆë©”ì´ì…˜ ì´ë¯¸ì§€ ë¡œë“œ
+	// Ä³¸¯ÅÍ ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¹ÌÁö ·Îµå
 	for (int i = 0; i < 2; i++)
 	{
 		sprintf_s(FileName, "./resource/Img/oh/Sprite-%04d.png", i + 1); 
 		playerimg[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 		D3DXGetImageInfoFromFile(FileName, &imagesinfo);
 	}
-	// ì´ ì´ë¯¸ì§€ ë¡œë“œ
+	// ÃÑ ÀÌ¹ÌÁö ·Îµå
 	sprintf_s(FileName, "./resource/Img/Gun-0001.png"); 
 	Gun.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	D3DXGetImageInfoFromFile(FileName, &imagesinfo);
 
-	// ì¡°ì¤€ê²½ ì´ë¯¸ì§€ ë¡œë“œ
+	// Á¶ÁØ°æ ÀÌ¹ÌÁö ·Îµå
 	sprintf_s(FileName, "./resource/Img/Scope-0001.png"); 
 	Scope.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	D3DXGetImageInfoFromFile(FileName, &imagesinfo);
 
-	// ì´ˆê¸° ì¶©ëŒ ìœ„ì¹˜ ì˜ì—­ ì„¤ì •
-	m_rc.left = pos.x;
-	m_rc.top = pos.y;
-	m_rc.right = pos.x + imagesinfo.Width;
-	m_rc.bottom = pos.y + imagesinfo.Height;
+	// ÃÊ±â Ãæµ¹ À§Ä¡ ¿µ¿ª ¼³Á¤
+	m_rcPlayer.left = pos.x;
+	m_rcPlayer.top = pos.y;
+	m_rcPlayer.right = pos.x + imagesinfo.Width;
+	m_rcPlayer.bottom = pos.y + imagesinfo.Height;
 }
 
 void Player::Update()
 {
-	// ì¤‘ë ¥ ë° ìœ„ì¹˜ ì—…ë°ì´íŠ¸ (10ms ê°„ê²©ìœ¼ë¡œ ì œì–´)
+	// Áß·Â ¹× À§Ä¡ ¾÷µ¥ÀÌÆ® (10ms °£°İÀ¸·Î Á¦¾î)
 	if(GetTickCount64() - m_PlayerTime > 10)
 	{
-		if(!grounded) pos.y += gravity; // ë•…ì´ ì•„ë‹ˆë©´ ì¤‘ë ¥ê°’ë§Œí¼ ë”í•´ í•˜ê°•
+		if(!grounded) pos.y += gravity; // ¶¥ÀÌ ¾Æ´Ï¸é Áß·Â°ª¸¸Å­ ´õÇØ ÇÏ°­
 		
-		// ìºë¦­í„° ì´ë¯¸ì§€ê°€ ì–´ë””ì— ìœ„ì¹˜í•˜ëŠ”ì§€ì— ë”°ë¼ ì˜¤í”„ì…‹ì´ ë‹¬ë¼ì§
-		m_rc.left = pos.x - 45;
-		m_rc.top = pos.y - 50;
-		m_rc.right = pos.x + imagesinfo.Width - 40;
-		m_rc.bottom = pos.y + imagesinfo.Height - 55;
+		// Ä³¸¯ÅÍ ÀÌ¹ÌÁö°¡ ¾îµğ¿¡ À§Ä¡ÇÏ´ÂÁö¿¡ µû¶ó ¿ÀÇÁ¼ÂÀÌ ´Ş¶óÁü
+		m_rcPlayer.left = pos.x - 45;
+		m_rcPlayer.top = pos.y - 50;
+		m_rcPlayer.right = pos.x + imagesinfo.Width - 40;
+		m_rcPlayer.bottom = pos.y + imagesinfo.Height - 55;
 
-		//ìºë¦­í„° ë°”ë‹¥ ì¶©ëŒì²˜ë¦¬
+		//Ä³¸¯ÅÍ ¹Ù´Ú Ãæµ¹Ã³¸®
 		if (map.m_Stage >= 1 && map.m_Stage <= 4)
 		{
-			if (m_rc.left < coll.m_rc.right && coll.m_rc.left < m_rc.right && m_rc.top < coll.m_rc.bottom && coll.m_rc.top < m_rc.bottom) grounded = true;
+			if (m_rcPlayer.left < coll.m_rc.right 
+				&& coll.m_rc.left < m_rcPlayer.right 
+				&& m_rcPlayer.top < coll.m_rc.bottom 
+				&& coll.m_rc.top < m_rcPlayer.bottom) 
+				grounded = true;
 		}
-		m_PlayerTime = GetTickCount64(); // ì‹œê°„ ê°±ì‹ 
+		m_PlayerTime = GetTickCount64(); // ½Ã°£ °»½Å
 	}
 
-    //ìºë¦­í„° í”„ë ˆì„
+    //Ä³¸¯ÅÍ ÇÁ·¹ÀÓ
 	if (GetTickCount64() - m_AnimTime > m_FrameDelay[m_CurrentFrame])
 	{
-		m_CurrentFrame++;
-		if (m_CurrentFrame >= 2) // í”„ë ˆì„ ì¸ë±ìŠ¤ê°€ ìµœëŒ€ í”„ë ˆì„ì— ë„ë‹¬í•˜ë©´
-			m_CurrentFrame = 0; // ë‹¤ì‹œ ì²« í”„ë ˆì„ìœ¼ë¡œ
+		// ÃÖ´ë ÇÁ·¹ÀÓ¿¡ µµ´ŞÇÏ¸é ´Ù½Ã Ã¹ ÇÁ·¹ÀÓÀ¸·Î
+		m_CurrentFrame = (m_CurrentFrame + 1) % 2;
 
-		m_AnimTime = GetTickCount64(); // ì‹œê°„ ê°±ì‹ 
+		m_AnimTime = GetTickCount64(); // ½Ã°£ °»½Å
 	}
 }
 
 
 void Player::Draw()
 {
-	// ê²Œì„ì´ ì‹œì‘ ìƒíƒœì¼ ë•Œë§Œ ê·¸ë¦¬ê¸°
+	// °ÔÀÓÀÌ ½ÃÀÛ »óÅÂÀÏ ¶§¸¸ ±×¸®±â
 	if (Gmanager.m_GameStart == true)
 	{
-		//ì´ íšŒì „ ê°ë„ ê³„ì‚° (ì™¸ë¶€ ìë£Œ (ìˆ˜í•™ ê³µì‹) ì°¸ê³ í•˜ì—¬ atan2f í•¨ìˆ˜ë¥¼ ì ìš©í–ˆìŠµë‹ˆë‹¤.)
-		// ë§ˆìš°ìŠ¤ ì»¤ì„œì™€ ìºë¦­í„°(ì´) ìœ„ì¹˜ ì‚¬ì´ì˜ ë²¡í„°ë¥¼ êµ¬í•¨. 
-		float dx = MouseX+20 - (pos.x);   // X ë°©í–¥ ì°¨ì´ = ë§ˆìš°ìŠ¤xì¢Œí‘œ - ìºë¦­í„° xì¢Œí‘œ
-		float dy = MouseY+45- (pos.y);   // Y ë°©í–¥ ì°¨ì´ = ë§ˆìš°ìŠ¤yì¢Œí‘œ - ìºë¦­í„° yì¢Œí‘œ
-		 angle = atan2f(dy, dx);   // ë‘ ì  ì‚¬ì´ì˜ ê°ë„ë¥¼ ë¼ë””ì•ˆìœ¼ë¡œ ê³„ì‚°
+		//ÃÑ È¸Àü °¢µµ °è»ê (¿ÜºÎ ÀÚ·á (¼öÇĞ °ø½Ä) Âü°íÇÏ¿© atan2f ÇÔ¼ö¸¦ Àû¿ëÇß½À´Ï´Ù.)
+		// ¸¶¿ì½º Ä¿¼­¿Í Ä³¸¯ÅÍ(ÃÑ) À§Ä¡ »çÀÌÀÇ º¤ÅÍ¸¦ ±¸ÇÔ. 
+		float dx = MouseX+20 - (pos.x);   // X ¹æÇâ Â÷ÀÌ = ¸¶¿ì½ºxÁÂÇ¥ - Ä³¸¯ÅÍ xÁÂÇ¥
+		float dy = MouseY+45- (pos.y);   // Y ¹æÇâ Â÷ÀÌ = ¸¶¿ì½ºyÁÂÇ¥ - Ä³¸¯ÅÍ yÁÂÇ¥
+		 angle = atan2f(dy, dx);   // µÎ Á¡ »çÀÌÀÇ °¢µµ¸¦ ¶óµğ¾ÈÀ¸·Î °è»ê
 
-		playerimg[m_CurrentFrame].Render(pos.x-50, pos.y-50, 0, 1, 1);//ìºë¦­í„° ì´ë¯¸ì§€ ë Œë”ë§
-		Gun.Render(pos.x, pos.y, angle, 1.5, 1.5, 1); //ì´ ì´ë¯¸ì§€ ë Œë”ë§ 
-		Scope.Render(MouseX+20, MouseY+45, 0, 1.0f, 1.0f, 1);//ì¡°ì¤€ê²½ ì´ë¯¸ì§€ ë Œë”ë§
+		playerimg[m_CurrentFrame].Render(pos.x-50, pos.y-50, 0, 1, 1);//Ä³¸¯ÅÍ ÀÌ¹ÌÁö ·»´õ¸µ
+		Gun.Render(pos.x, pos.y, angle, 1.5, 1.5, 1); //ÃÑ ÀÌ¹ÌÁö ·»´õ¸µ 
+		Scope.Render(MouseX+20, MouseY+45, 0, 1.0f, 1.0f, 1);//Á¶ÁØ°æ ÀÌ¹ÌÁö ·»´õ¸µ
 	}
 }

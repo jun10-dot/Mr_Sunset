@@ -1,41 +1,39 @@
-ï»¿class Bullet
+class Bullet
 {
    
 public:
 		Bullet();
 	~Bullet();
-	float speed; // ì´ì•Œ í˜„ì¬ ì†ë„
-	float prevBulletX; // ì´ì „ í”„ë ˆì„ì˜ ì´ì•Œ x ì¢Œí‘œ
-	float prevBulletY; // ì´ì „ í”„ë ˆì„ì˜ ì´ì•Œ y ì¢Œí‘œ
-	float dirX;  //ì´ì•Œì˜ Xì¶• ì´ë™ ë°©í–¥ ë²¡í„°
-	float dirY;  //ì´ì•Œì˜ Yì¶• ì´ë™ ë°©í–¥ ë²¡í„°
-	float BulletX; //ì´ì•Œì˜ í˜„ì¬ X ì¢Œí‘œ
-	float BulletY; //ì´ì•Œì˜ í˜„ì¬ Y ì¢Œí‘œ
-	ULONGLONG delayBullet; //ì´ì•Œ ë°œì‚¬ í›„ ì‹œê°„ ê¸°ë¡
+	float speed; // ÃÑ¾Ë ÇöÀç ¼Óµµ
+	float dirX;  //ÃÑ¾ËÀÇ XÃà ÀÌµ¿ ¹æÇâ º¤ÅÍ
+	float dirY;  //ÃÑ¾ËÀÇ YÃà ÀÌµ¿ ¹æÇâ º¤ÅÍ
+	float BulletX; //ÃÑ¾ËÀÇ ÇöÀç X ÁÂÇ¥
+	float BulletY; //ÃÑ¾ËÀÇ ÇöÀç Y ÁÂÇ¥
+	ULONGLONG delayBullet; //ÃÑ¾Ë ¹ß»ç ÈÄ ½Ã°£ ±â·Ï
 
-	bool bulletFired[6]; // ì´ì•Œ UI ìŠ¬ë¡¯ ë°œì‚¬ ìƒíƒœ
-	int Alpha[6]; // ì´ì•Œ UI íˆ¬ëª…ë„
-	Sprite m_BulletImg[6]; // ì´ì•Œ ê°œìˆ˜ UI ì´ë¯¸ì§€
-	ULONGLONG bulletAlphaTime[6]; // ì´ì•Œ UI íˆ¬ëª…ë„ ì—…ë°ì´íŠ¸ ì‹œê°„ ê¸°ë¡
+	bool bulletFired[6]; // ÃÑ¾Ë UI ½½·Ô ¹ß»ç »óÅÂ
+	int Alpha[6]; // ÃÑ¾Ë UI Åõ¸íµµ
+	Sprite m_BulletImg[6]; // ÃÑ¾Ë °³¼ö UI ÀÌ¹ÌÁö
+	ULONGLONG bulletAlphaTime[6]; // ÃÑ¾Ë UI Åõ¸íµµ ¾÷µ¥ÀÌÆ® ½Ã°£ ±â·Ï
 
-	// ì¶©ëŒ ê³„ì‚° ë³€ìˆ˜
+	// Ãæµ¹ °è»ê º¯¼ö
 	float overlapLeft;  
 	float overlapRight;
 	float overlapTop;
 	float overlapBottom;
 
-	Sprite Bulletimg; // ì´ì•Œ ë³¸ì²´ ì´ë¯¸ì§€
-	int BounceCount; // ì¶©ëŒì²´ì— íŠ•ê¸´ íšŸìˆ˜
-	//D3DXIMAGE_INFO  bulletInfo; //ì´ì•Œ ì´ë¯¸ì§€ í•´ìƒë„ ì •ë³´
+	Sprite Bulletimg; // ÃÑ¾Ë º»Ã¼ ÀÌ¹ÌÁö
+	int BounceCount; // Ãæµ¹Ã¼¿¡ Æ¨±ä È½¼ö
+	//D3DXIMAGE_INFO  bulletInfo; //ÃÑ¾Ë ÀÌ¹ÌÁö ÇØ»óµµ Á¤º¸
 	
-	RECT m_rc_Bullet; // ì´ì•Œì˜ ì¶©ëŒ ë°•ìŠ¤
+	RECT m_rc_Bullet; // ÃÑ¾ËÀÇ Ãæµ¹ ¹Ú½º
 
 	void Init();
 	void Update();
 	void Draw();
 	bool CheckAndResolveCollision(RECT& bullet_rc, const RECT& wall_rc);
-	void Fire(int targetX, int targetY); // ë°œì‚¬ ì‹œ ë°©í–¥ ë²¡í„° ê³„ì‚° ë° ì´ˆê¸° ìœ„ì¹˜ ì„¤ì •
+	void Fire(int targetX, int targetY); // ¹ß»ç ½Ã ¹æÇâ º¤ÅÍ °è»ê ¹× ÃÊ±â À§Ä¡ ¼³Á¤
 
 }; 
 extern Bullet bullet;
-extern bool isFireBullet; // ì´ì•Œ ë°œì‚¬ ìš”ì²­ í”Œë˜ê·¸ (ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œ)
+extern bool isFireBullet; // ÃÑ¾Ë ¹ß»ç ¿äÃ» ÇÃ·¡±× (¸¶¿ì½º Å¬¸¯ ½Ã)

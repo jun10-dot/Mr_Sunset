@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 g_DeviceFont dv_font;
 
@@ -18,7 +18,7 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 
 
 	ZeroMemory( &d3dpp, sizeof( d3dpp ) );
-	d3dpp.Windowed = TRUE;												// ì „ì²´ í™”ë©´ ëª¨ë“œë¡œ ìƒì„±
+	d3dpp.Windowed = TRUE;												// ÀüÃ¼ È­¸é ¸ğµå·Î »ı¼º
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;						
 	d3dpp.hDeviceWindow = g_hWnd;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;				          
@@ -33,7 +33,7 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 		&d3dpp, &Device9);
 
 
-	// ì•ŒíŒŒ ë¸”ë Œë”© ì„¤ì •
+	// ¾ËÆÄ ºí·»µù ¼³Á¤
 	Device9->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	Device9->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	Device9->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -42,7 +42,7 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 	Device9->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 
 	
-	// ìŠ¤í”„ë¼ì´íŠ¸/í°íŠ¸ ê·¸ë¦¬ê¸° ìœ„í•´ ìƒì„±.
+	// ½ºÇÁ¶óÀÌÆ®/ÆùÆ® ±×¸®±â À§ÇØ »ı¼º.
 	D3DXCreateSprite( Device9 , &Sprite ) ;
 
 	ZeroMemory( &fdesc , sizeof(fdesc) ) ;
@@ -51,7 +51,7 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 	fdesc.Weight = 500 ;
 	fdesc.Italic = FALSE ;
 	fdesc.CharSet = DEFAULT_CHARSET ;
-	strcpy( fdesc.FaceName, "íƒ€ì´í¬_ìŒë¬¸ë™ B" ) ;
+	strcpy( fdesc.FaceName, "Å¸ÀÌÆ÷_½Ö¹®µ¿ B" ) ;
 
 	D3DXCreateFontIndirect( Device9 , &fdesc , &Fonts ) ;
 

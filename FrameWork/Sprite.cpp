@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 Sprite g_Load;
 
@@ -28,8 +28,8 @@ bool Sprite::Create(const char* filename, bool bUseTransparency, D3DCOLOR Transp
 	return TRUE;
 }
 
-void Sprite::Draw( float dx , float dy , LONG sx , LONG sy , LONG sw , LONG sh, float centerX, float centerY ) // í™”ë©´ì˜ dx, dyì—
-{																								   // ê·¸ë¦¼ì˜ sx, syë¶€í„° sw, sh ê¹Œì§€ ì¶œë ¥í•´ë¼
+void Sprite::Draw( float dx , float dy , LONG sx , LONG sy , LONG sw , LONG sh, float centerX, float centerY ) // È­¸éÀÇ dx, dy¿¡
+{																								   // ±×¸²ÀÇ sx, syºÎÅÍ sw, sh ±îÁö Ãâ·ÂÇØ¶ó
 	RECT srcRect = { sx , sy , sw , sh } ;
 
 	D3DXVECTOR3 position( (float)dx, (float)dy, 1.0f ) ;
@@ -62,7 +62,7 @@ void Sprite::Draw(float x, float y)
 }
 
 
-void Sprite::Render( float x , float y , float radian, float sx, float sy, int pivotMode, D3DCOLOR tintColor) // íšŒì „, í™•ëŒ€ ì¶œë ¥
+void Sprite::Render( float x , float y , float radian, float sx, float sy, int pivotMode, D3DCOLOR tintColor) // È¸Àü, È®´ë Ãâ·Â
 {                                                                       
     RECT Rect ;                                                          
     ID3DXSprite* pSprite ;                                                
@@ -106,9 +106,9 @@ void Sprite::Render( float x , float y , float radian, float sx, float sy, int p
 
 
 void Sprite::RenderDraw(float  x , float  y , LONG  sx , LONG  sy , LONG  sw , LONG  sh, float  radian, float  sl, float  st)
-																		// íšŒì „, í™•ëŒ€ ì¶œë ¥
-{																	   // sx -1 : ì¢Œìš°ë°˜ì „, sy -1 = ìƒí•˜ë°˜ì „
-	RECT Rect = {sx, sy, sw, sh};									   // sx 0 : ì—†ì–´ì§, 1 : ê·¸ëŒ€ë¡œ, 2 : xì¶•ìœ¼ë¡œ 2ë°° í™•ëŒ€
+																		// È¸Àü, È®´ë Ãâ·Â
+{																	   // sx -1 : ÁÂ¿ì¹İÀü, sy -1 = »óÇÏ¹İÀü
+	RECT Rect = {sx, sy, sw, sh};									   // sx 0 : ¾ø¾îÁü, 1 : ±×´ë·Î, 2 : xÃàÀ¸·Î 2¹è È®´ë
 	ID3DXSprite* pSprite ;
 
 	pSprite = dv_font.Sprite ;

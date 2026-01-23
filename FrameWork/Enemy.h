@@ -1,21 +1,21 @@
-ï»¿#pragma once
+#pragma once
 #include "Include.h"
 
 class Enemy
 {
 private:
-	float gravity; // ì¤‘ë ¥ ê°€ì†ë„ ê°’
-	bool grounded; // ë°”ë‹¥ì— ë‹¿ì•˜ëŠ”ì§€ ì—¬ë¶€
-	float x; // ìƒì„±ì ì´ˆê¸°í™”ìš© X ì¢Œí‘œ
-	float y; // ìƒì„±ì ì´ˆê¸°í™”ìš© Y ì¢Œí‘œ
+	float gravity; // Áß·Â °¡¼Óµµ °ª
+	bool grounded; // ¹Ù´Ú¿¡ ´ê¾Ò´ÂÁö ¿©ºÎ
+	float x; // »ı¼ºÀÚ ÃÊ±âÈ­¿ë X ÁÂÇ¥
+	float y; // »ı¼ºÀÚ ÃÊ±âÈ­¿ë Y ÁÂÇ¥
 
-	int m_CurrentFrame; // í˜„ì¬ ì¶œë ¥í•  í”„ë ˆì„
-	DWORD m_AnimTime;  // ë§ˆì§€ë§‰ ì• ë‹ˆë©”ì´ì…˜ í”„ë ˆì„ ë³€ê²½ ì‹œê°„ 
-	DWORD m_FrameDelay; // ì• ë‹ˆë©”ì´ì…˜ í”„ë ˆì„ ê°„ì˜ ì§€ì—° ì‹œê°„
+	int m_CurrentFrame; // ÇöÀç Ãâ·ÂÇÒ ÇÁ·¹ÀÓ
+	DWORD m_AnimTime;  // ¸¶Áö¸· ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ º¯°æ ½Ã°£ 
+	DWORD m_FrameDelay; // ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ °£ÀÇ Áö¿¬ ½Ã°£
 
-	int Alpha; //ì  ì´ë¯¸ì§€ íˆ¬ëª…ë„
-	ULONGLONG AlphaTime; // ë§ˆì§€ë§‰ ì•ŒíŒŒê°’ ë³€ê²½ ì‹œê°„
-	bool Alphastate; // íˆ¬ëª…í™” ì—¬ë¶€
+	int Alpha; //Àû ÀÌ¹ÌÁö Åõ¸íµµ
+	ULONGLONG AlphaTime; // ¸¶Áö¸· ¾ËÆÄ°ª º¯°æ ½Ã°£
+	bool Alphastate; // Åõ¸íÈ­ ¿©ºÎ
 public :
 	Enemy() {};
 	Enemy(float _x, float _y);
@@ -23,26 +23,26 @@ public :
 
 	enum ENEMY_STATE 
 	{
-		STATE_IDLE, // ì‚´ì•„ìˆëŠ” ìƒíƒœ
-		STATE_HIT // í”¼ê²©(ì‚¬ë§) ìƒíƒœ
+		STATE_IDLE, // »ì¾ÆÀÖ´Â »óÅÂ
+		STATE_HIT // ÇÇ°İ(»ç¸Á) »óÅÂ
 	}; ENEMY_STATE state;
 
 	char FileName[256];
-	Sprite Enemies[5]; // Idle : 2ì¥, Hit 3ì¥
-	D3DXIMAGE_INFO imagesinfo; // ì´ë¯¸ì§€ íŒŒì¼ í•´ìƒë„ ì •ë³´
-	RECT m_rc; // ì ì˜ ì¶©ëŒ ì˜ì—­
-	D3DXVECTOR2 pos; //ì ì˜ ìœ„ì¹˜ ë²¡í„°
-	DWORD m_PlayTime; // ì¶©ëŒ ì—…ë°ì´íŠ¸ ì‹œê°„ (ì¦ë ¥ ì œì–´)
+	Sprite Enemies[5]; // Idle : 2Àå, Hit 3Àå
+	D3DXIMAGE_INFO imagesinfo; // ÀÌ¹ÌÁö ÆÄÀÏ ÇØ»óµµ Á¤º¸
+	RECT m_rcEnemy; // ÀûÀÇ Ãæµ¹ ¿µ¿ª
+	D3DXVECTOR2 pos; //ÀûÀÇ À§Ä¡ º¤ÅÍ
+	DWORD m_PlayTime; // Ãæµ¹ ¾÷µ¥ÀÌÆ® ½Ã°£ (Áõ·Â Á¦¾î)
    
-	bool isDead; //ì ì´ ì£½ì—ˆëŠ”ì§€ ì—¬ë¶€ (GameManager, Sound ë“±ì— ì‚¬ìš©ë¨)
-	bool ScoreScreen; //ì  ëª¨ë‘ ëª…ì¤‘ì‹œ ì ìˆ˜ í™”ë©´ ë„ìš¸ì§€ ì—¬ë¶€
+	bool isDead; //ÀûÀÌ Á×¾ú´ÂÁö ¿©ºÎ (GameManager, Sound µî¿¡ »ç¿ëµÊ)
+	bool ScoreScreen; //Àû ¸ğµÎ ¸íÁß½Ã Á¡¼ö È­¸é ¶ç¿ïÁö ¿©ºÎ
 	
-	bool isHit; // ì ì´ ì´ì•Œì— ë§ì•˜ëŠ”ì§€ ì—¬ë¶€
-	DWORD HitTime; //ì  í”¼ê²© í›„ ì‹œê°„ ê¸°ë¡ (GameManagerì— ì‚¬ìš©ë¨)
+	bool isHit; // ÀûÀÌ ÃÑ¾Ë¿¡ ¸Â¾Ò´ÂÁö ¿©ºÎ
+	DWORD HitTime; //Àû ÇÇ°İ ÈÄ ½Ã°£ ±â·Ï (GameManager¿¡ »ç¿ëµÊ)
 
 	void Init();
 	void Update(); 
 	void Draw();
 };
 extern Enemy enemy;
-extern bool isFireBullet; //ì´ì•Œ ë°œì‚¬ ìƒíƒœ í”Œë˜ê·¸
+extern bool isFireBullet; //ÃÑ¾Ë ¹ß»ç »óÅÂ ÇÃ·¡±×

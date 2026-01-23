@@ -1,12 +1,12 @@
-ï»¿#ifndef __Logo_H__
+#ifndef __Logo_H__
 #define __Logo_H__
 
 class Logo : public Chap
 {
 private:
-	int currentFrame = 0; // í˜„ì¬ ì¶œë ¥í•  í”„ë ˆì„
-	float frameTime = 0; // í”„ë ˆì„ ëˆ„ì  ì‹œê°„
-	float frameDelay = 0.1f; // ë‹¤ìŒ í”„ë ˆì„ìœ¼ë¡œ ì „í™˜í•  ì‹œê°„ ê°„ê²©
+	int currentFrame = 0; // ÇöÀç Ãâ·ÂÇÒ ÇÁ·¹ÀÓ
+	float frameTime = 0; // ÇÁ·¹ÀÓ ´©Àû ½Ã°£
+	float frameDelay = 0.1f; // ´ÙÀ½ ÇÁ·¹ÀÓÀ¸·Î ÀüÈ¯ÇÒ ½Ã°£ °£°İ
 public:
 	Logo();
 	~Logo();

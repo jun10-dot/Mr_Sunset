@@ -1,20 +1,20 @@
-ï»¿#ifndef __Over_H__
+#ifndef __Over_H__
 #define __Over_H__
 
 class Over : public Chap
 {
 private:	
-	DWORD totalTime; // ì´ ê²Œì„ í”Œë ˆì´ ì‹œê°„
-	DWORD seconds; // ì´ˆ 
-	DWORD minutes; // ë¶„ 
+	DWORD totalTime; // ÃÑ °ÔÀÓ ÇÃ·¹ÀÌ ½Ã°£
+	DWORD seconds; // ÃÊ 
+	DWORD minutes; // ºĞ 
 public:
 	Over();
 	~Over();
-	Sprite overimg;  // Over í™”ë©´ ë°°ê²½ ì´ë¯¸ì§€
+	Sprite overimg;  // Over È­¸é ¹è°æ ÀÌ¹ÌÁö
 	virtual void Init();
 	virtual void Update(double frame);
 	virtual void Draw();
-	virtual void OnMessage(MSG* msg); // ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬ 
+	virtual void OnMessage(MSG* msg); // ¸¶¿ì½º ÀÔ·Â Ã³¸® 
 };
 
 #endif

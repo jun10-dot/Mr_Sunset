@@ -1,4 +1,4 @@
-ï»¿#include"Include.h"
+#include"Include.h"
 
 Bullet bullet;
 
@@ -12,18 +12,18 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-	speed = 20.0f; // ê¸°ë³¸ ì†ë„ ì„¤ì •
-	BounceCount = 0; // íŠ•ê¹€ íšŸìˆ˜ ì´ˆê¸°í™”
-	delayBullet = GetTickCount64(); // í˜„ì¬ ì‹œê°„ ê¸°ë¡
+	speed = 20.0f; // ±âº» ¼Óµµ ¼³Á¤
+	BounceCount = 0; // Æ¨±è È½¼ö ÃÊ±âÈ­
+	delayBullet = GetTickCount64(); // ÇöÀç ½Ã°£ ±â·Ï
 
 	char FileName[256];
 
-	//ì´ì•Œ ì´ë¯¸ì§€ ë¡œë“œ
+	//ÃÑ¾Ë ÀÌ¹ÌÁö ·Îµå
 	sprintf_s(FileName, "./resource/Img/Bullet-0001.png");
 	Bulletimg.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	
-	// ì´ì•Œ ê°œìˆ˜ UI ì´ë¯¸ì§€ ë¡œë“œ
-	// ìµœëŒ€ 6ë°œ ë° ì´ˆê¸°í™”
+	// ÃÑ¾Ë °³¼ö UI ÀÌ¹ÌÁö ·Îµå
+	// ÃÖ´ë 6¹ß ¹× ÃÊ±âÈ­
 	for (int i = 0; i < 6; i++) 
 	{
 		sprintf_s(FileName, "./resource/Img/bulletimg/bulletimg-%04d.png", i); 
@@ -35,96 +35,83 @@ void Bullet::Init()
 	}
 }
 
-//ì¢Œìš° ìƒí•˜ ì¶•ì´ ëª¨ë‘ ì¡´ì¬í•˜ëŠ” ì¶©ëŒì²´ (ìœ„ì¹˜ ë³´ì • ë° ì •êµí•œ íŠ•ê¹€)
+// Ãæµ¹ ¹æÇâÀ» ÆÇº°ÇÏ°í À§Ä¡ º¸Á¤À» ÅëÇØ º® ÆÄ°íµå´Â Çö»ó ÃÖ¼ÒÈ­
 bool Bullet::CheckAndResolveCollision(RECT& bullet_rc, const RECT& wall_rc)
 {
-	// ì¶©ëŒ í™•ì¸
-	if (!(bullet_rc.left < wall_rc.right &&
-		wall_rc.left < bullet_rc.right &&
-		bullet_rc.top < wall_rc.bottom &&
-		wall_rc.top < bullet_rc.bottom))
-	{
-		// ì¶©ëŒí•˜ì§€ ì•ŠìŒ
+	// Ãæµ¹ ¿©ºÎ È®ÀÎ
+	if (!(bullet_rc.left < wall_rc.right && wall_rc.left < bullet_rc.right &&
+		bullet_rc.top < wall_rc.bottom && wall_rc.top < bullet_rc.bottom))
 		return false;
-	}
+	
+	// Ãæµ¹ ¹Ú½ºµéÀÌ °¢ ¹æÇâÀ¸·Î ¾ó¸¶³ª °ãÃÆ´ÂÁö °è»ê
+	float overlapLeft = bullet_rc.right - wall_rc.left;
+	float overlapRight = wall_rc.right - bullet_rc.left;
+	float overlapTop = bullet_rc.bottom - wall_rc.top;
+	float overlapBottom = wall_rc.bottom - bullet_rc.top;
 
-	// í˜„ì¬ ì¶©ëŒ ë°•ìŠ¤ë“¤ì´ ê° ë°©í–¥ìœ¼ë¡œ ì–¼ë§ˆë‚˜ ê²¹ì³¤ëŠ”ì§€ ê³„ì‚°
-	overlapLeft = bullet_rc.right - wall_rc.left;
-	overlapRight = wall_rc.right - bullet_rc.left;
-	overlapTop = bullet_rc.bottom - wall_rc.top;
-	overlapBottom = wall_rc.bottom - bullet_rc.top;
-
-	// ìµœì†Œ ê²¹ì¹¨
+	// ÃÖ¼Ò °ãÄ§ ÃàÀ» °áÁ¤ÇÏ°í Ãæµ¹ ¸é(¼öÆò/¼öÁ÷) °áÁ¤
 	float minX = min(overlapLeft, overlapRight);
 	float minY = min(overlapTop, overlapBottom);
 
-	
-	if (minX < minY) {
-		// ì¢Œìš° ì¶©ëŒ ë°œìƒ (Xì¶•ì´ ìµœì†Œ ê²¹ì¹¨)
-		dirX = -dirX;       // X ë°©í–¥ ë°˜ì „ (íŠ•ê¹€)
-		BulletX = prevBulletX; // ì¶©ëŒ ì§ì „ ìœ„ì¹˜ë¡œ ë³µê·€
-		BounceCount++;      // íŠ•ê¹€ íšŸìˆ˜ ì¦ê°€
-
+	if (minX < minY) 
+	{
 		if (overlapLeft < overlapRight)
-			BulletX -= overlapLeft + 1; // ì™¼ìª½ìœ¼ë¡œ 1ë§Œí¼ ë°€ì–´ëƒ„
+			BulletX -= overlapLeft; // ¿ŞÂÊ º®¿¡ ºÎµúÇûÀ¸¹Ç·Î ¿ŞÂÊÀ¸·Î ¹Ğ¾î³¿
 		else
-			BulletX += overlapRight + 1; // ì˜¤ë¥¸ìª½ìœ¼ë¡œ 1ë§Œí¼ ë°€ì–´ëƒ„
+			BulletX += overlapRight; // ¿À¸¥ÂÊ º®¿¡ ºÎµúÇûÀ¸¹Ç·Î ¿À¸¥ÂÊÀ¸·Î ¹Ğ¾î³¿
+		// XÃà (ÁÂ¿ì) Ãæµ¹ ¹ß»ı 
+		dirX = -dirX;           // XÃà ÀÌµ¿ ¹æÇâ ¹İÀü
+		BounceCount++;
 	}
-	else {
-		// ìƒí•˜ ì¶©ëŒ ë°œìƒ (Yì¶•ì´ ìµœì†Œ ê²¹ì¹¨)
-		dirY = -dirY;       // Y ë°©í–¥ ë°˜ì „ (íŠ•ê¹€)
-		BulletY = prevBulletY; // ì¶©ëŒ ì§ì „ ìœ„ì¹˜ë¡œ ë³µê·€
-		BounceCount++;      // íŠ•ê¹€ íšŸìˆ˜ ì¦ê°€
-
+	else 
+	{
 		if (overlapTop < overlapBottom)
-			BulletY -= overlapTop + 1; // ìœ„ìª½ìœ¼ë¡œ 1ë§Œí¼ ë°€ì–´ëƒ„
+			BulletY -= overlapTop; // À§ÂÊ¿¡ ºÎµúÇûÀ¸¹Ç·Î À§·Î ¹Ğ¾î³¿
 		else
-			BulletY += overlapBottom + 1; // ì•„ë˜ìª½ìœ¼ë¡œ 1ë§Œí¼ ë°€ì–´ëƒ„
+			BulletY += overlapBottom; // ¾Æ·¡ÂÊ¿¡ ºÎµúÇûÀ¸¹Ç·Î ¾Æ·¡·Î ¹Ğ¾î³¿
+		// YÃà (»óÇÏ) Ãæµ¹ ¹ß»ı
+		dirY = -dirY;           // YÃà ÀÌµ¿ ¹æÇâ ¹İÀü
+		BounceCount++;
 	}
 
-	// ì¶©ëŒí–ˆìŒ
 	return true;
 }
 
 void Bullet::Update()
 {
-	// ì´ì•Œ	ë°œì‚¬ í›„ ì¢…ë£Œ ì¡°ê±´
-	// 1. 6ì´ˆ ì´ìƒ ë¹„í–‰ í•œ ê²½ìš°
-	// 2. 20ë²ˆ ì´ìƒ íŠ•ê²¨ì§„ ê²½ìš°
-	// 3. í™”ë©´ìƒ ì¢Œ ìš° ë°–ìœ¼ë¡œ ë‚˜ê°ˆ ê²½ìš° 
+	// ÃÑ¾Ë	¹ß»ç ÈÄ Á¾·á Á¶°Ç
+	// 1. 6ÃÊ ÀÌ»ó ºñÇà ÇÑ °æ¿ì
+	// 2. 20¹ø ÀÌ»ó Æ¨°ÜÁø °æ¿ì
+	// 3. È­¸é»ó ÁÂ ¿ì ¹ÛÀ¸·Î ³ª°¥ °æ¿ì 
 	if (GetTickCount64() - delayBullet >= 6000 || BounceCount >= 20 || BulletX > 1280 || BulletX < 0)
 	{
 		isFireBullet = false; 
 
-		// ì´ì•Œ ìœ„ì¹˜ë¥¼ í”Œë ˆì´ì–´ ìœ„ì¹˜ë¡œ ì´ˆê¸°í™”
+		// ÃÑ¾Ë À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î À§Ä¡·Î ÃÊ±âÈ­
 		BulletX = player.pos.x;  
 		BulletY = player.pos.y;  
 	}
 
-	// ìœ„ì¹˜ ê¸°ë¡
-	prevBulletX = BulletX; // í˜„ì¬ ìœ„ì¹˜ë¥¼ ì´ì „ ìœ„ì¹˜ë¡œ ë³µì‚¬ 
-	prevBulletY = BulletY; 
-
-	//ì´ì•Œ ì´ë™
-	if (isFireBullet) // ì´ì•Œ ë°œì‚¬ëœ ìƒíƒœë¼ë©´
+	//ÃÑ¾Ë ÀÌµ¿
+	if (isFireBullet) // ÃÑ¾Ë ¹ß»çµÈ »óÅÂ¶ó¸é
 	{
-		speed -= 0.02f;  // ì†ë„ ì ì  ì¤„ì´ê¸°
+		speed -= 0.02f;  // ¼Óµµ Á¡Á¡ ÁÙÀÌ±â
 
-		// ìƒˆë¡œìš´ ìœ„ì¹˜ ê³„ì‚° : ë°©í–¥ * ì†ë„
+		// »õ·Î¿î À§Ä¡ °è»ê : ¹æÇâ * ¼Óµµ
 		BulletX += dirX * speed;  
 		BulletY += dirY * speed; 
 	}
-	else  // ì´ì•Œì´ ì¤‘ë‹¨ëœ ìƒíƒœë¼ë©´
+	else  // ÃÑ¾ËÀÌ Áß´ÜµÈ »óÅÂ¶ó¸é
 	{
-		speed = 20.0f;  // ì†ë„ ì´ˆê¸°í™” 
-		BounceCount = 0;  // íŠ•ê¹€ íšŸìˆ˜ ì´ˆê¸°í™”
+		speed = 20.0f;  // ¼Óµµ ÃÊ±âÈ­ 
+		BounceCount = 0;  // Æ¨±è È½¼ö ÃÊ±âÈ­
 
-		// ì´ì•Œ ìœ„ì¹˜ë¥¼ í”Œë ˆì´ì–´ ìœ„ì¹˜ë¡œ ì´ˆê¸°í™”
+		// ÃÑ¾Ë À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î À§Ä¡·Î ÃÊ±âÈ­
 		BulletX = player.pos.x;  
 		BulletY = player.pos.y; 
 	}
 
-	// ì´ì•Œ ì¶©ëŒ ë°•ìŠ¤ ì—…ë°ì´íŠ¸
+	// ÃÑ¾Ë Ãæµ¹ ¹Ú½º ¾÷µ¥ÀÌÆ®
 	m_rc_Bullet.left = BulletX + map.posX ;
 	m_rc_Bullet.top = BulletY + map.posY ;
 	m_rc_Bullet.right = m_rc_Bullet.left ;
@@ -132,126 +119,85 @@ void Bullet::Update()
 
 	if (map.m_Stage == 1)
 	{
-		if (m_rc_Bullet.left < coll.m_rc.right && coll.m_rc.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc.bottom && coll.m_rc.top < m_rc_Bullet.bottom)
-		{
-			dirY = -dirY; // ë°©í–¥ ë°˜ì „
-			BounceCount++;
-		}
-		if (m_rc_Bullet.left < coll.m_rc1.right && coll.m_rc1.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc1.bottom && coll.m_rc1.top < m_rc_Bullet.bottom)
-		{
-			dirY = -dirY;
-			BounceCount++;
-		}
-
-		// ì •êµí•œ íŠ•ê¹€ ë° ìœ„ì¹˜ ë³´ì • ì ìš© í•¨ìˆ˜
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc2); // ì¤‘ì•™ ë²½ (ì¢Œìš°, ìƒí•˜)
+		// Á¤±³ÇÑ Æ¨±è ¹× À§Ä¡ º¸Á¤ Àû¿ë ÇÔ¼ö
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc); 
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc1); 
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc2); 
 	}
 
 	if (map.m_Stage == 2)
 	{
-		if (m_rc_Bullet.left < coll.m_rc.right && coll.m_rc.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc.bottom && coll.m_rc.top < m_rc_Bullet.bottom)
-		{
-			dirY = -dirY;
-			BounceCount++;
-		}
-		if (m_rc_Bullet.left < coll.m_rc2.right && coll.m_rc2.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc2.bottom && coll.m_rc2.top < m_rc_Bullet.bottom)
-		{
-			dirX = -dirX;
-			BounceCount++;
-		}
-		if (m_rc_Bullet.left < coll.m_rc2_1.right && coll.m_rc2_1.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc2_1.bottom && coll.m_rc2_1.top < m_rc_Bullet.bottom)
-		{
-			dirX = -dirX;
-			BounceCount++;
-		}
-
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Under); // ì•„ë˜ ì¤‘ì•™ ë²½
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Up); // ìœ„ ì¤‘ì•™ ë²½
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc); 
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc2); 
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc2_1); 
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Under);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Up);
 	}
 
 	if (map.m_Stage == 3)
 	{
-		if (m_rc_Bullet.left < coll.m_rc.right && coll.m_rc.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc.bottom && coll.m_rc.top < m_rc_Bullet.bottom)
-		{
-			dirY = -dirY;
-			BounceCount++;
-		}
-
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Left); // ì™¼ìª½ ì›€ì§ì´ëŠ” ë²½
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Right); // ì˜¤ë¥¸ìª½ ì›€ì§ì´ëŠ” ë²½
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Left);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc_Right);
 	}
 
 	if (map.m_Stage == 4)
 	{
-		if (m_rc_Bullet.left < coll.m_rc.right && coll.m_rc.left < m_rc_Bullet.right && coll.m_rc.top < coll.m_rc.bottom && coll.m_rc.top < m_rc_Bullet.bottom)
-		{
-			dirY = -dirY; BounceCount++;
-		}
-		if (m_rc_Bullet.left < coll.m_rc2.right && coll.m_rc2.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc2.bottom && coll.m_rc2.top < m_rc_Bullet.bottom)
-		{
-			dirX = -dirX; BounceCount++;
-		}
-		if (m_rc_Bullet.left < coll.m_rc2_1.right && coll.m_rc2_1.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc2_1.bottom && coll.m_rc2_1.top < m_rc_Bullet.bottom)
-		{
-			dirX = -dirX; BounceCount++;
-		}
-		if (m_rc_Bullet.left < coll.m_rc1.right && coll.m_rc1.left < m_rc_Bullet.right && m_rc_Bullet.top < coll.m_rc1.bottom && coll.m_rc1.top < m_rc_Bullet.bottom)
-		{
-			dirY = -dirY; BounceCount++;
-		}
-
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rcSleft); // ì™¼ìª½ ì‘ì€ ë²½
-		CheckAndResolveCollision(m_rc_Bullet, coll.m_rcSright); // ì˜¤ë¥¸ìª½ ì‘ì€ ë²½
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc1);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc2);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rc2_1);
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rcSleft); 
+		CheckAndResolveCollision(m_rc_Bullet, coll.m_rcSright);
 	}
-	
 	
 }
 
 void Bullet::Draw()
 {
-	// ê²Œì„ ì‹œì‘ ìƒíƒœì—ì„œë§Œ ë Œë”ë§
+	// °ÔÀÓ ½ÃÀÛ »óÅÂ¿¡¼­¸¸ ·»´õ¸µ
 	if (Gmanager.m_GameStart == true)
 	{
-		Bulletimg.Render(BulletX, BulletY, 0, 1.4f, 1.4f, 1);  //ì´ì•Œ ë Œë”ë§ (1.4 ë°° í™•ëŒ€)
+		Bulletimg.Render(BulletX, BulletY, 0, 1.4f, 1.4f, 1);  //ÃÑ¾Ë ·»´õ¸µ (1.4 ¹è È®´ë)
 
-		// ì´ì•Œ ê°œìˆ˜ UI ë Œë”ë§ 
+		// ÃÑ¾Ë °³¼ö UI ·»´õ¸µ 
 		for (int i = 0; i < 6; i++)
 		{
-			// X ì¢Œí‘œ: 130 - i*30 (ì™¼ìª½ìœ¼ë¡œ ê°ˆìˆ˜ë¡ ê°„ê²© 30ì”© ì¢ì•„ì§)
-			// ë°œì‚¬ëœ ì´ì•Œ UIëŠ” íˆ¬ëª…í•˜ê²Œ ë Œë”ë§
+			// X ÁÂÇ¥: 130 - i*30 (¿ŞÂÊÀ¸·Î °¥¼ö·Ï °£°İ 30¾¿ Á¼¾ÆÁü)
+			// ¹ß»çµÈ ÃÑ¾Ë UI´Â Åõ¸íÇÏ°Ô ·»´õ¸µ
 			m_BulletImg[i].Render(map.posX + 130 - i * 30, map.posY - 15, 0, 1, 1, 0, D3DCOLOR_ARGB(Alpha[i], 255, 255, 255));
 		}
 	}
 }
 
-// ë°œì‚¬ ëª…ë ¹
-void Bullet::Fire(int targetX, int targetY) // ë§ˆìš°ìŠ¤ Xì¢Œí‘œ Yì¢Œí‘œ ë°›ì•„ì˜¤ê¸°
+// ¹ß»ç ¸í·É
+void Bullet::Fire(int targetX, int targetY) // ¸¶¿ì½º XÁÂÇ¥ YÁÂÇ¥ ¹Ş¾Æ¿À±â
 {
-	delayBullet = GetTickCount64(); // ë°œì‚¬ ì‹œê°„ ì´ˆê¸°í™”
-	BulletX = player.pos.x; // ì´ì•Œ ì´ˆê¸° ìœ„ì¹˜ë¥¼ í”Œë ˆì´ì–´ ìœ„ì¹˜ë¡œ ì„¤ì •
+	delayBullet = GetTickCount64(); // ¹ß»ç ½Ã°£ ÃÊ±âÈ­
+	BulletX = player.pos.x; // ÃÑ¾Ë ÃÊ±â À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î À§Ä¡·Î ¼³Á¤
 	BulletY = player.pos.y;
 
-	// ëª©í‘œ ì§€ì ê¹Œì§€ì˜ ë²¡í„° ê³„ì‚° (ì™¸ë¶€ ì‚¬ì´íŠ¸ (ìˆ˜í•™ ê³µì‹) ì°¸ê³ )
-	float x = targetX + 20 - BulletX; // í”Œë ˆì´ì–´ ìœ„ì¹˜ ~ ëª©í‘œ ë§ˆìš°ìŠ¤ í´ë¦­ ì§€ì 
+	// ¸ñÇ¥ ÁöÁ¡±îÁöÀÇ º¤ÅÍ °è»ê (¿ÜºÎ »çÀÌÆ® (¼öÇĞ °ø½Ä) Âü°í)
+	float x = targetX + 20 - BulletX; // ÇÃ·¹ÀÌ¾î À§Ä¡ ~ ¸ñÇ¥ ¸¶¿ì½º Å¬¸¯ ÁöÁ¡
 	float y = targetY + 40 - BulletY;
-	float len = sqrtf(x * x + y * y); // ë²¡í„°ì˜ ê¸¸ì´ ê³„ì‚°
+	float len = sqrtf(x * x + y * y); // º¤ÅÍÀÇ ±æÀÌ °è»ê
 
-	if (len != 0) // ë°©í–¥ ë²¡í„° ì •ê·œí™” 
+	if (len != 0) // ¹æÇâ º¤ÅÍ Á¤±ÔÈ­ 
 	{
-		// ê¸¸ì´ë¡œ ë‚˜ëˆ„ì–´ ë°©í–¥ ë²¡í„°ì˜ í¬ê¸°ë¥¼ 1ë¡œ ë§Œë“­ë‹ˆë‹¤.
+		// ±æÀÌ·Î ³ª´©¾î ¹æÇâ º¤ÅÍÀÇ Å©±â¸¦ 1·Î ¸¸µì´Ï´Ù.
 		dirX = x / len; 
 		dirY = y / len;
 	}
 
-	// ì´ì•Œ UI ìŠ¬ë¡¯ ì—…ë°ì´íŠ¸
+	// ÃÑ¾Ë UI ½½·Ô ¾÷µ¥ÀÌÆ®
 	for (int i = 0; i < 6; i++)
     {
      	if (!bulletFired[i])
 		{
-			bulletFired[i] = true; // ë°œì‚¬ ìƒíƒœ ON
-			Alpha[i] = 100; // íˆ¬ëª…ë„ ê°ì†Œ
+			bulletFired[i] = true; // ¹ß»ç »óÅÂ ON
+			Alpha[i] = 100; // Åõ¸íµµ °¨¼Ò
 			bulletAlphaTime[i] = GetTickCount64();
-			break; // ìŠ¬ë¡¯ í•˜ë‚˜ë§Œ ì‚¬ìš©í•˜ê³  ì¢…ë£Œ
+			break; // ½½·Ô ÇÏ³ª¸¸ »ç¿ëÇÏ°í Á¾·á
 		}
     }
 }

@@ -1,4 +1,4 @@
-﻿#ifndef __Chap_H__
+#ifndef __Chap_H__
 #define __Chap_H__
 
 class Chap

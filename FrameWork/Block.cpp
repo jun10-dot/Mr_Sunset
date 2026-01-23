@@ -1,4 +1,4 @@
-ï»¿#include"Include.h"
+#include"Include.h"
 
 Block block;
 
@@ -16,21 +16,21 @@ void Block::Init()
 	Exploded = false;
 	isTNThit = false;
 	Destroyed = false;
-	Alpha = 255; //ê¸°ë³¸ ìƒ‰
+	Alpha = 255; //±âº» »ö
 	char FileName[256];
 	
-	// TNT ë¸”ë¡ ì´ë¯¸ì§€ ë¡œë“œ
+	// TNT ºí·Ï ÀÌ¹ÌÁö ·Îµå
 	sprintf_s(FileName, "./resource/Img/TNT.png");
 	m_tnt.Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 
-	// í­ë°œ ì• ë‹ˆë©”ì´ì…˜ ì´ë¯¸ì§€ ë¡œë“œ
+	// Æø¹ß ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¹ÌÁö ·Îµå
 	for (int i = 0; i < 7; i++)
 	{
-		sprintf_s(FileName, "./resource/Img/explosion/frame-%04d.png",i); //íŒŒí‹°í´
+		sprintf_s(FileName, "./resource/Img/explosion/frame-%04d.png",i); //ÆÄÆ¼Å¬
 		m_boom[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
 
-	// TNT ë¸”ë¡ì˜ ì¶©ëŒ ì˜ì—­ ì„¤ì • (ìŠ¤í…Œì´ì§€ 4ì˜ ê³ ì •ëœ ìœ„ì¹˜)
+	// TNT ºí·ÏÀÇ Ãæµ¹ ¿µ¿ª ¼³Á¤ (½ºÅ×ÀÌÁö 4ÀÇ °íÁ¤µÈ À§Ä¡)
 	m_rcObject.left = 615;
 	m_rcObject.top = 580;
 	m_rcObject.right = 705;
@@ -40,37 +40,37 @@ void Block::Update()
 {
 	if (map.m_Stage == 4)
 	{
-		if (!Destroyed) //ë¸”ë¡ì´ íŒŒê´´ë˜ì§€ ì•Šì•˜ì„ ë•Œë§Œ
+		if (!Destroyed) //ºí·ÏÀÌ ÆÄ±«µÇÁö ¾Ê¾ÒÀ» ¶§¸¸
 		{
 			if (bullet.m_rc_Bullet.left < m_rcObject.right &&
 				m_rcObject.left < bullet.m_rc_Bullet.right &&
 				bullet.m_rc_Bullet.top < m_rcObject.bottom &&
 				m_rcObject.top < bullet.m_rc_Bullet.bottom)
 			{
-				// ì´ì•Œ ìœ„ì¹˜ë¥¼ í”Œë ˆì´ì–´(ì´) ìœ„ì¹˜ë¡œ ë¦¬ì…‹
+				// ÃÑ¾Ë À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î(ÃÑ) À§Ä¡·Î ¸®¼Â
 				bullet.BulletX = player.pos.x;
 				bullet.BulletY = player.pos.y;
 
-				isTNThit = true; // í­ë°œ ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘ í”Œë˜ê·¸ true
-				isFireBullet = false; //ì´ì•Œ ë¦¬ì…‹
-				Exploded = true; // TNTê°€ í­ë°œí–ˆìŒì„ ì•Œë ¤ì¤Œ (GameManager.cpp)
+				isTNThit = true; // Æø¹ß ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÀÛ ÇÃ·¡±× true
+				isFireBullet = false; //ÃÑ¾Ë ¸®¼Â
+				Exploded = true; // TNT°¡ Æø¹ßÇßÀ½À» ¾Ë·ÁÁÜ (GameManager.cpp)
 			}
 		}
-		if (GetTickCount64() - animTime > 100) //í­ë°œ ì• ë‹ˆë©”ì´ì…˜ (100ms ê°„ê²©)
+		if (GetTickCount64() - animTime > 100) //Æø¹ß ¾Ö´Ï¸ŞÀÌ¼Ç (100ms °£°İ)
 		{
-			if (isTNThit) // í­ë°œì´ ì§„í–‰ ì¤‘ì´ë¼ë©´
+			if (isTNThit) // Æø¹ßÀÌ ÁøÇà ÁßÀÌ¶ó¸é
 			{
 				m_CurrentFrame++;
-				Alpha = 0; // TNT ì´ë¯¸ì§€ë¥¼ íˆ¬ëª…í•˜ê²Œ ë§Œë“¤ì–´ ì‚¬ë¼ì§€ê²Œ ì²˜ë¦¬
+				Alpha = 0; // TNT ÀÌ¹ÌÁö¸¦ Åõ¸íÇÏ°Ô ¸¸µé¾î »ç¶óÁö°Ô Ã³¸®
 			} 
 
-			if (m_CurrentFrame >= 7) // í­ë°œ ì• ë‹ˆë©”ì´ì…˜ì´ ëê¹Œì§€ ì¬ìƒë˜ë©´
+			if (m_CurrentFrame >= 7) // Æø¹ß ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡±îÁö Àç»ıµÇ¸é
 			{
-				isTNThit = false; // ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ
-				Destroyed = true; // ë¸”ë¡ ì™„ì „ íŒŒê´´ ìƒíƒœë¡œ ë³€ê²½
-				m_CurrentFrame = 0; // í”„ë ˆì„ ì´ˆê¸°í™”
+				isTNThit = false; // ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·á
+				Destroyed = true; // ºí·Ï ¿ÏÀü ÆÄ±« »óÅÂ·Î º¯°æ
+				m_CurrentFrame = 0; // ÇÁ·¹ÀÓ ÃÊ±âÈ­
 			}
-			animTime = GetTickCount64(); // ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ ê°±ì‹ 
+			animTime = GetTickCount64(); // ¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ °»½Å
 		}
 	}
 }
@@ -79,15 +79,13 @@ void Block::Draw()
 { 
 	if (map.m_Stage == 4)
 	{
-		// TNT ë¸”ë¡ ë Œë”ë§ (íŒŒê´´ë˜ì§€ ì•Šì•˜ì„ ë•Œë§Œ)
-		if (!Destroyed)
-		{
+		// TNT ºí·Ï ·»´õ¸µ (ÆÄ±«µÇÁö ¾Ê¾ÒÀ» ¶§¸¸)
+		if (!Destroyed)	
 			m_tnt.Render(map.posX + 615, map.posY + 580, 0, 1, 1, 0, D3DCOLOR_ARGB(Alpha, 255, 255, 255)); //tnt
-		}
-		// í­ë°œ ì• ë‹ˆë©”ì´ì…˜ ë Œë”ë§ (í­ë°œì´ ì§„í–‰ ì¤‘ì¼ ë•Œë§Œ)
+		
+		// Æø¹ß ¾Ö´Ï¸ŞÀÌ¼Ç ·»´õ¸µ (Æø¹ßÀÌ ÁøÇà ÁßÀÏ ¶§¸¸)
 		if (isTNThit) 
-		{
 			m_boom[m_CurrentFrame].Render(map.posX + 540, map.posY + 480, 0, 5, 5);
-		}
+		
 	}
 }

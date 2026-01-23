@@ -1,23 +1,23 @@
-ï»¿class Block
+class Block
 {
 private:
-	int animTime; //í”„ë ˆì„ ë³€ê²½ ì‹œê°„
-	int m_CurrentFrame; //í˜„ì¬ ì¶œë ¥í•  í­ë°œ ì• ë‹ˆë©”ì´ì…˜
-	int Alpha; // í­ë°œ ì‹œ ì‚¬ë¼ì§€ê²Œ í•˜ëŠ” ìš©ë„
-	bool Destroyed; // TNTê°€ ì™„ì „íˆ íŒŒê´´ë˜ì–´ ì‚¬ë¼ì¡ŒëŠ”ì§€ ì—¬ë¶€
+	int animTime; //ÇÁ·¹ÀÓ º¯°æ ½Ã°£
+	int m_CurrentFrame; //ÇöÀç Ãâ·ÂÇÒ Æø¹ß ¾Ö´Ï¸ŞÀÌ¼Ç
+	int Alpha; // Æø¹ß ½Ã »ç¶óÁö°Ô ÇÏ´Â ¿ëµµ
+	bool Destroyed; // TNT°¡ ¿ÏÀüÈ÷ ÆÄ±«µÇ¾î »ç¶óÁ³´ÂÁö ¿©ºÎ
 public:
 	Block();
 	~Block();
-	Sprite m_tnt; // TNT ë¸”ë¡ ì´ë¯¸ì§€
-	Sprite m_boom[7]; // í­ë°œ ì• ë‹ˆë©”ì´ì…˜ì„ ìœ„í•œ 7í”„ë ˆì„ ì´ë¯¸ì§€
-	RECT m_rcObject; // TNT ì¶©ëŒ ì˜ì—­
+	Sprite m_tnt; // TNT ºí·Ï ÀÌ¹ÌÁö
+	Sprite m_boom[7]; // Æø¹ß ¾Ö´Ï¸ŞÀÌ¼ÇÀ» À§ÇÑ 7ÇÁ·¹ÀÓ ÀÌ¹ÌÁö
+	RECT m_rcObject; // TNT Ãæµ¹ ¿µ¿ª
 	
-	bool Exploded; //TNTê°€ í­ë°œ í–ˆëŠ”ì§€ ì—¬ë¶€
-	bool isTNThit; // TNTê°€ ì´ì•Œì— ë§ì•˜ê³ , í˜„ì¬ í­ë°œ ì• ë‹ˆë©”ì´ì…˜ì´ ì§„í–‰ ì¤‘ì¸ì§€ ì—¬ë¶€
+	bool Exploded; //TNT°¡ Æø¹ß Çß´ÂÁö ¿©ºÎ
+	bool isTNThit; // TNT°¡ ÃÑ¾Ë¿¡ ¸Â¾Ò°í, ÇöÀç Æø¹ß ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÁøÇà ÁßÀÎÁö ¿©ºÎ
 
 	void Init();
 	void Update();
 	void Draw();
 };
 extern Block block; 
-extern bool isFireBullet; // ì´ì•Œ ë°œì‚¬ í”Œë˜ê·¸ (ì´ì•Œ ë¦¬ì…‹ ì‹œ ì‚¬ìš©)
+extern bool isFireBullet; // ÃÑ¾Ë ¹ß»ç ÇÃ·¡±× (ÃÑ¾Ë ¸®¼Â ½Ã »ç¿ë)

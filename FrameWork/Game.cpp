@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 Game game;
 
@@ -31,7 +31,7 @@ void Game::Draw()
 	Gmanager.Draw();
 }
 
-// Chap, ì¬ì •ì˜ í•¨ìˆ˜ í˜¸ì¶œ
+// Chap, ÀçÁ¤ÀÇ ÇÔ¼ö È£Ãâ
 void Game::Update(double frame)
 {
 	static DWORD a = 0;
@@ -51,31 +51,26 @@ void Game::OnMessage( MSG* msg )
 {
 	switch (msg->message)
 	{
-	case WM_LBUTTONDOWN: // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ í´ë¦­
+	case WM_LBUTTONDOWN: // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° Å¬¸¯
 
-		// ì¸ê²Œì„ UI ë²„íŠ¼ ì¶©ëŒ ì˜ì—­ ì„¤ì •
+		// ÀÎ°ÔÀÓ UI ¹öÆ° Ãæµ¹ ¿µ¿ª ¼³Á¤
 		if (1217 <= MouseX && 1262 >= MouseX && 684 <= MouseY && 726 >= MouseY)
-		{
-			PostQuitMessage(0); // ê²Œì„ ì¢…ë£Œ ë²„íŠ¼
-		}
+			PostQuitMessage(0); // °ÔÀÓ Á¾·á ¹öÆ°
+		
 		else if (1158 <= MouseX && 1200 >= MouseX && 687 <= MouseY && 723 >= MouseY)
-		{
-			Gmanager.GameReset();// ë¦¬ì…‹ ë²„íŠ¼
-		}
+			Gmanager.GameReset();// ¸®¼Â ¹öÆ°
+		
 		else if (1094 <= MouseX && 1135 >= MouseX && 685 <= MouseY && 722 >= MouseY)
 		{
 			msg->message = 0;
-			Gmanager.Prvchap(); // ë©”ì¸í™”ë©´ ì „í™˜ ë²„íŠ¼
+			Gmanager.Prvchap(); // ¸ŞÀÎÈ­¸é ÀüÈ¯ ¹öÆ°
 		}
-		if (result.Nextmap && 449 <= MouseX && 791 >= MouseX && 385 <= MouseY && 500 >= MouseY)//ì¢Œí‘œ ë³€ê²½ì‹œì¼œì£¼ê¸°
-		{
-			Gmanager.Nextmap(); // ì ìˆ˜ í™”ë©´ ì¤‘ì•™ ë‹¤ìŒë¼ìš´ë“œ ì§„í–‰ ë²„íŠ¼
-		}
+		if (result.Nextmap && 449 <= MouseX && 791 >= MouseX && 385 <= MouseY && 500 >= MouseY)//ÁÂÇ¥ º¯°æ½ÃÄÑÁÖ±â
+			Gmanager.Nextmap(); // Á¡¼ö È­¸é Áß¾Ó ´ÙÀ½¶ó¿îµå ÁøÇà ¹öÆ°
 
-		if (result.Again && 449 <= MouseX && 791 >= MouseX && 385 <= MouseY && 500 >= MouseY)//ì¢Œí‘œ ë³€ê²½ì‹œì¼œì£¼ê¸°
-		{
-			Gmanager.GameReset();// ì ìˆ˜ í™”ë©´ ì¤‘ì•™ ë¦¬ì…‹ ë²„íŠ¼ 
-		}
+		if (result.Again && 449 <= MouseX && 791 >= MouseX && 385 <= MouseY && 500 >= MouseY)//ÁÂÇ¥ º¯°æ½ÃÄÑÁÖ±â
+			Gmanager.GameReset();// Á¡¼ö È­¸é Áß¾Ó ¸®¼Â ¹öÆ° 
+
 		break;
 	}
 }

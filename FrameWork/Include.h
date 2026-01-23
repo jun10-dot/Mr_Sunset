@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #pragma comment(lib,"d3d9.lib")

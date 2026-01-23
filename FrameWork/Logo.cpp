@@ -1,4 +1,4 @@
-ï»¿#define _CRT_NONSTDC_NO_DEPRECATE
+#define _CRT_NONSTDC_NO_DEPRECATE
 
 #include "Include.h"
 
@@ -14,7 +14,7 @@ void Logo::Init()
 {
 	char filename[256];
 	
-	// 4ê°œì˜ ì´ë¯¸ì§€ ë¡œë“œ
+	// 4°³ÀÇ ÀÌ¹ÌÁö ·Îµå
 	for (int i = 0; i < 4; i++)
 	{
 		sprintf(filename, "./resource/Img/Load/Sp-%04d.png", i);
@@ -24,34 +24,31 @@ void Logo::Init()
 
 void Logo::Update(double frame)
 {
-	// í”„ë ˆì„ ì‹œê°„ ëˆ„ì  
+	// ÇÁ·¹ÀÓ ½Ã°£ ´©Àû 
 	frameTime += frame / 1300.0f;
 
-	//0.1ì´ˆ ê²½ê³¼í•˜ë©´ ë‹¤ìŒ í”„ë ˆì„ìœ¼ë¡œ ì „í™˜
+	//0.1ÃÊ °æ°úÇÏ¸é ´ÙÀ½ ÇÁ·¹ÀÓÀ¸·Î ÀüÈ¯
 	if (frameTime >= frameDelay)
 	{
 		frameTime = 0.0f;
 		currentFrame++;
 
-		// í”„ë ˆì„ 0, 1, 2 ì¼ ë•Œ ì‚¬ìš´ë“œ ì¬ìƒ
+		// ÇÁ·¹ÀÓ 0, 1, 2 ÀÏ ¶§ »ç¿îµå Àç»ı
 		if (currentFrame <= 3)
-		{
 			sound.PlayGunShot();
-		}
-		// ë§ˆì§€ë§‰ í”„ë ˆì„ì´ë©´
+		
+		// ¸¶Áö¸· ÇÁ·¹ÀÓÀÌ¸é
 		else if (currentFrame >= 4)
-		{
-			currentFrame = 3; // ì •ì§€ ìƒíƒœ ìœ ì§€
-		}
+			currentFrame = 3; // Á¤Áö »óÅÂ À¯Áö
 	}
 }
 
 
 void Logo::Draw()
 {
-	// í˜„ì¬ í”„ë ˆì„ ì´ë¯¸ì§€ ìƒ‰ìƒ/ì•ŒíŒŒ ê°’ ì„¤ì •
+	// ÇöÀç ÇÁ·¹ÀÓ ÀÌ¹ÌÁö »ö»ó/¾ËÆÄ °ª ¼³Á¤
 	loadimg[currentFrame].SetColor(255, 255, 255, 0);  
-	// ì´ë¯¸ì§€ ë Œë”ë§
+	// ÀÌ¹ÌÁö ·»´õ¸µ
 	loadimg[currentFrame].Render(0, -30, 0.0f, 1.0f, 1.0f);
 }
 
@@ -59,13 +56,13 @@ void Logo::OnMessage( MSG* msg )
 {
 	switch(msg->message)
 	{
-	case WM_LBUTTONDOWN : // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ í´ë¦­
-		// ì• ë‹ˆë©”ì´ì…˜ì´ ë§ˆì§€ë§‰ í”„ë ˆì„ì¼ ë•Œë§Œ í´ë¦­ ì²˜ë¦¬
+	case WM_LBUTTONDOWN : // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° Å¬¸¯
+		// ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ¸¶Áö¸· ÇÁ·¹ÀÓÀÏ ¶§¸¸ Å¬¸¯ Ã³¸®
 		if (currentFrame == 3) 
 		{
 			msg->message = 0;
-			g_Mng.n_Chap = MENU; // ë©”ì¸ ë©”ë‰´ë¡œ ì „í™˜
-			Gmanager.SetCursorVisible(TRUE); // ì»¤ì„œ í‘œì‹œ
+			g_Mng.n_Chap = MENU; // ¸ŞÀÎ ¸Ş´º·Î ÀüÈ¯
+			Gmanager.SetCursorVisible(TRUE); // Ä¿¼­ Ç¥½Ã
 		}
 		break;
 	}

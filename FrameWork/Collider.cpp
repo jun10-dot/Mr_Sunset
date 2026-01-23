@@ -47,12 +47,12 @@ void Collider::Init()
 			m_rc2.left = 0; // 왼쪽 경계 벽
 			m_rc2.top = 0; 
 			m_rc2.right = 280; 
-			m_rc2.bottom = 668; 
+			m_rc2.bottom = 680; 
 
 			m_rc2_1.left = 1000; // 오른쪽 경계 벽
 			m_rc2_1.top = 0;  
 			m_rc2_1.right = 1280; 
-			m_rc2_1.bottom = 668; 
+			m_rc2_1.bottom = 690; 
 
 			m_rc_Under.left = 270; // 중앙 아래쪽 가로 벽 
 			m_rc_Under.top = 420;
@@ -73,7 +73,7 @@ void Collider::Init()
 			m_rc.bottom = 770; 
 
 			// 움직이는 벽(Stage 3 벽)의 초기 위치 설정
-			wallXleftMove = 412; // 왼쪽 벽
+			wallXleftMove = 412; // 왼쪽 벽 
 			wallYleftMove = 350;
 
 			wallXrightMove = 696; // 오른쪽 벽
@@ -95,7 +95,7 @@ void Collider::Init()
 			m_rc2.left = 0; //왼쪽 경계 구조물
 			m_rc2.top = 0;  
 			m_rc2.right = 260; 
-			m_rc2.bottom = 668; 
+			m_rc2.bottom = 690; 
 
 			m_rc2_1.left = 995; // 오른쪽 경계 구조물
 			m_rc2_1.top = 0;  

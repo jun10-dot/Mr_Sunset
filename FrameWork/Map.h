@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "Include.h"
 
 class Map
@@ -8,23 +8,23 @@ public :
 	Map();
 	~Map();
 	
-	Sprite m_BackgroundImg; // ê³µí†µ ë°°ê²½ ì´ë¯¸ì§€
-	Sprite m_Stage1_Img[3]; //ìŠ¤í…Œì´ì§€1
-	Sprite m_Stage2_Img[3]; //ìŠ¤í…Œì´ì§€2
-	Sprite m_Stage3_Img[2]; //ìŠ¤í…Œì´ì§€3
-	Sprite m_Stage4_Img[6]; //ìŠ¤í…Œì´ì§€4
-	Sprite m_Exit; //ì¢…ë£Œ ë²„íŠ¼ ì´ë¯¸ì§€ 
-	Sprite m_Reset; //ë¦¬ì…‹ ë²„íŠ¼ ì´ë¯¸ì§€
-	Sprite m_Menu; //ë©”ë‰´ ë²„íŠ¼ ì´ë¯¸ì§€
-	Sprite m_Sound[2]; //ì‚¬ìš´ë“œ On/Off ì´ë¯¸ì§€
+	Sprite m_BackgroundImg; // °øÅë ¹è°æ ÀÌ¹ÌÁö
+	Sprite m_Stage1_Img[3]; //½ºÅ×ÀÌÁö1
+	Sprite m_Stage2_Img[3]; //½ºÅ×ÀÌÁö2
+	Sprite m_Stage3_Img[2]; //½ºÅ×ÀÌÁö3
+	Sprite m_Stage4_Img[6]; //½ºÅ×ÀÌÁö4
+	Sprite m_Exit; //Á¾·á ¹öÆ° ÀÌ¹ÌÁö 
+	Sprite m_Reset; //¸®¼Â ¹öÆ° ÀÌ¹ÌÁö
+	Sprite m_Menu; //¸Ş´º ¹öÆ° ÀÌ¹ÌÁö
+	Sprite m_Sound[2]; //»ç¿îµå On/Off ÀÌ¹ÌÁö
 
-	int m_Stage; // í˜„ì¬ ìŠ¤í…Œì´ì§€ ë²ˆí˜¸
+	int m_Stage; // ÇöÀç ½ºÅ×ÀÌÁö ¹øÈ£
 
-	float posX, posY; // ë§µì˜ ì „ì²´ ì˜¤í”„ì…‹
+	float posX, posY; // ¸ÊÀÇ ÀüÃ¼ ¿ÀÇÁ¼Â
 
 	void Init();
 	void InitStage();
-	void AddEnemy(int x, int y); // íŠ¹ì • ì¢Œí‘œì— ì ì„ ìƒì„±í•˜ê³  ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€ 
+	void AddEnemy(int x, int y); // Æ¯Á¤ ÁÂÇ¥¿¡ ÀûÀ» »ı¼ºÇÏ°í ¸®½ºÆ®¿¡ Ãß°¡ 
 	void Draw();
 };
 

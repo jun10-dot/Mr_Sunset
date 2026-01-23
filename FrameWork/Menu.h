@@ -1,9 +1,9 @@
-ï»¿#ifndef __Menu_H__
+#ifndef __Menu_H__
 #define __Menu_H__
 
 class Menu : public Chap
 {
-	Sprite menuimg; // ë©”ë‰´ í™”ë©´ ì´ë¯¸ì§€
+	Sprite menuimg; // ¸Ş´º È­¸é ÀÌ¹ÌÁö
 public:
 	Menu();
 	~Menu();

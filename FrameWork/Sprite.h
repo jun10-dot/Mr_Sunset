@@ -1,4 +1,4 @@
-﻿class Sprite
+class Sprite
 {
 public:
 	Sprite(void);

@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 #include <string>
 
 Menu::Menu()
@@ -11,18 +11,18 @@ Menu::~Menu()
 
 void Menu::Init()
 {
-	// ë©”ë‰´ ë°°ê²½ ì´ë¯¸ì§€ ë¡œë“œ
+	// ¸Ş´º ¹è°æ ÀÌ¹ÌÁö ·Îµå
 	menuimg.Create("./resource/Img/lobby/Lobby.png", false, D3DCOLOR_XRGB(0, 0, 0));
 }
 
-// Chap, ì¬ì •ì˜ í•¨ìˆ˜ í˜¸ì¶œ
+// Chap, ÀçÁ¤ÀÇ ÇÔ¼ö È£Ãâ
 void Menu::Update(double frame)
 {
 }
 
 void Menu::Draw()
 {
-	// ë°°ê²½ ì´ë¯¸ì§€ ë Œë”ë§
+	// ¹è°æ ÀÌ¹ÌÁö ·»´õ¸µ
 	menuimg.Render(-50, 0, 0, 0.75, 0.75); 
 }
 
@@ -30,37 +30,37 @@ void Menu::OnMessage(MSG* msg)
 {
 	switch (msg->message)
 	{
-	  case WM_LBUTTONDOWN:  // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ í´ë¦­
+	  case WM_LBUTTONDOWN:  // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° Å¬¸¯
 	
-		// ë§ˆìš°ìŠ¤ í´ë¦­ ì¢Œí‘œ
+		// ¸¶¿ì½º Å¬¸¯ ÁÂÇ¥
 		int mouseX = LOWORD(msg->lParam);
 		int mouseY = HIWORD(msg->lParam);
 	  
-		// ê²Œì„ ì‹œì‘ ë²„íŠ¼ (ì¶©ëŒ ì˜ì—­)
+		// °ÔÀÓ ½ÃÀÛ ¹öÆ° (Ãæµ¹ ¿µ¿ª)
 		if (453 <= mouseX && 845 >= mouseX && 360 <= mouseY && 463 >= mouseY)
 		{
 			msg->message = 0;
-			// ê²Œì„ ì±•í„°ë¡œ ì „í™˜
+			// °ÔÀÓ Ã©ÅÍ·Î ÀüÈ¯
 			g_Mng.n_Chap = GAME; 
-			// ì´ì•Œ ì‚¬ìš´ë“œ ê´€ë ¨ í”Œë˜ê·¸ ì´ˆê¸°í™”
+			// ÃÑ¾Ë »ç¿îµå °ü·Ã ÇÃ·¡±× ÃÊ±âÈ­
 			BulletSound = false;
-			// ê²Œì„ ì´ˆê¸°í™”
+			// °ÔÀÓ ÃÊ±âÈ­
 			Gmanager.GameReset();
-			// ê²Œì„ ì‹œê°„ ì¸¡ì • ì‹œì‘ ì‹œì  ê¸°ë¡
+			// °ÔÀÓ ½Ã°£ ÃøÁ¤ ½ÃÀÛ ½ÃÁ¡ ±â·Ï
 			Gmanager.GameTime = GetTickCount64();
-			// íƒ€ì´ë¨¸ ì‹¤í–‰ ON
+			// Å¸ÀÌ¸Ó ½ÇÇà ON
 			Gmanager.m_TimerRunning = true;
 		
-			if(!sound.isMuted) // ìŒì†Œê±° ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´
+			if(!sound.isMuted) // À½¼Ò°Å »óÅÂ°¡ ¾Æ´Ï¶ó¸é
 			{
-				sound.soundinit = false; // ì‚¬ìš´ë“œ ì´ˆê¸°í™”, ì¬ìƒ ì¤€ë¹„
+				sound.soundinit = false; // »ç¿îµå ÃÊ±âÈ­, Àç»ı ÁØºñ
 			}
 		}
 
-		// ê²Œì„ ì¢…ë£Œ ë²„íŠ¼ (ì¶©ëŒ ì˜ì—­)
+		// °ÔÀÓ Á¾·á ¹öÆ° (Ãæµ¹ ¿µ¿ª)
 		else if (450 <= mouseX && 845 >= mouseX && 545 <= mouseY && 652 >= mouseY)
 		{
-			PostQuitMessage(0); // ìœˆë„ìš° ì¢…ë£Œ ë©”ì‹œì§€
+			PostQuitMessage(0); // À©µµ¿ì Á¾·á ¸Ş½ÃÁö
 		}
 	  break;
     }

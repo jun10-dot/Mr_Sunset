@@ -1,4 +1,4 @@
-ï»¿#include "Include.h"
+#include "Include.h"
 
 Sound sound;
 
@@ -9,67 +9,70 @@ Sound::Sound()
 Sound::~Sound()
 {
 }
+
+void Sound::Init()
+{
+	m_EnemyDieIndex = 0;
+	if (m_Bk1 != nullptr) // ´ÙÀ½ ¶ó¿îµå ÁøÀÔ ½Ã ¹è°æÀ½¾Ç ¶Ç Àç»ıµÇ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇØ
+		return;
+
+	g_pSoundManager = new CSoundManager();
+	g_pSoundManager->Initialize(g_hWnd, DSSCL_PRIORITY); //DSSCL_PRIORITY·Î ÃÊ±âÈ­
+	g_pSoundManager->SetPrimaryBufferFormat(2, 22050, 16); //¹öÆÛ ¼³Á¤
+
+	// »ç¿îµå ¸®¼Ò½º ·Îµå
+	g_pSoundManager->Create(&m_Bk1, (LPWSTR)L"./resource/Sound/BGM_0000.wav", 0, GUID_NULL);
+	g_pSoundManager->Create(&m_Shot, (LPWSTR)L"./resource/Sound/shot.wav", 0, GUID_NULL);
+	g_pSoundManager->Create(&m_Boom, (LPWSTR)L"./resource/Sound/explosion.wav", 0, GUID_NULL);
+	g_pSoundManager->Create(&m_GunShot, (LPWSTR)L"./resource/Sound/Backgroundshot-0001.wav", 0, GUID_NULL);
+
+	// Àû »ç¸Á »ç¿îµå ¹è¿­ ·Îµå
+	for (int i = 0; i < 4; i++)
+	{
+		g_pSoundManager->Create(&m_EnemyDieArray[i], (LPWSTR)L"./resource/Sound/enemydie_0001.wav", 0, GUID_NULL);
+	}
+}
+
 void Sound::Update()
 {
-	// ìŒì†Œê±° ìƒíƒœê°€ ì•„ë‹ˆê³ , ì‚¬ìš´ë“œ ê°ì²´ê°€ ë¡œë“œë˜ì—ˆìœ¼ë©°, ì´ì•Œ ë°œì‚¬ ìš”ì²­ì´ ë“¤ì–´ì™”ì„ ê²½ìš°
+	// À½¼Ò°Å »óÅÂ°¡ ¾Æ´Ï°í, »ç¿îµå °´Ã¼°¡ ·ÎµåµÇ¾úÀ¸¸ç, ÃÑ¾Ë ¹ß»ç ¿äÃ»ÀÌ µé¾î¿ÔÀ» °æ¿ì
 	if (!isMuted && m_Shot && BulletSound)
 	{
-		m_Shot->Play(0, 0); //ì´ì•Œ ë°œì‚¬ ì‚¬ìš´ë“œ
-		BulletSound = false; //í”Œë˜ê·¸ ì´ˆê¸°í™”
+		m_Shot->Play(0, 0); //ÃÑ¾Ë ¹ß»ç »ç¿îµå
+		BulletSound = false; //ÇÃ·¡±× ÃÊ±âÈ­
 	}
 
-	// "", "", ì•„ì§ ì¬ìƒ ì‹œì‘ì´ ì•ˆ ëœ ê²½ìš°
+	// "", "", ¾ÆÁ÷ Àç»ı ½ÃÀÛÀÌ ¾È µÈ °æ¿ì
 	if (!isMuted && m_Bk1 && !soundinit)
 	{
-		m_Bk1->Play(0, DSBPLAY_LOOPING); //ë°°ê²½ìŒì•… ë¬´í•œ ë°˜ë³µ ì¬ìƒ
+		m_Bk1->Play(0, DSBPLAY_LOOPING); //¹è°æÀ½¾Ç ¹«ÇÑ ¹İº¹ Àç»ı
 		soundinit = true; 
 	}
-	//"", "", TNT í­ë°œ í”Œë˜ê·¸ ì‚¬ìš©í•œ ê²½ìš°
+	//"", "", TNT Æø¹ß ÇÃ·¡±× »ç¿ëÇÑ °æ¿ì
 	if (!isMuted && m_Boom && block.isTNThit)
 	{
 		m_Boom->Play(0, 0);
 	}
 
-	//ì  ë¦¬ìŠ¤íŠ¸ë¥¼ ìˆœíšŒí•˜ë©° ì ì´ ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
+	//Àû ¸®½ºÆ®¸¦ ¼øÈ¸ÇÏ¸ç ÀûÀÌ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
 	for (auto enemy : Gmanager.myList)
 	{
 		if (!isMuted && enemy->isDead)
 		{	
-			// ì  ì‚¬ë§ ì‚¬ìš´ë“œì˜ ë‹¤ì¤‘ ì¬ìƒì„ ìœ„í•œ ì²˜ë¦¬
-			m_EnemyDieArray[m_EnemyDieIndex]->Play(0, 0, 0);
-			// ë‹¤ìŒ ì‚¬ìš´ë“œ ê°ì²´ë¥¼ ê°€ë¦¬í‚¤ë„ë¡ ì¸ë±ìŠ¤ë¥¼ ìˆœí™˜
+			// Àû »ç¸Á »ç¿îµåÀÇ ´ÙÁß Àç»ıÀ» À§ÇÑ Ã³¸®
+			m_EnemyDieArray[m_EnemyDieIndex]->Play(0, 0);
+			// ´ÙÀ½ »ç¿îµå °´Ã¼¸¦ °¡¸®Å°µµ·Ï ÀÎµ¦½º¸¦ ¼øÈ¯
 			m_EnemyDieIndex = (m_EnemyDieIndex + 1) % 4;
-			//ì¤‘ë³µ ì¬ìƒì„ ë°©ì§€í•©ë‹ˆë‹¤.
+
 			enemy->isDead = false;
 		}
-	}
-}
-void Sound::Init()
-{
-	if (m_Bk1 != nullptr) // ë‹¤ìŒ ë¼ìš´ë“œ ì§„ì… ì‹œ ë°°ê²½ìŒì•… ë˜ ì¬ìƒë˜ëŠ” ê²ƒì„ ë°©ì§€í•˜ê¸° ìœ„í•´
-		return;
-	
-	g_pSoundManager = new CSoundManager();
-	g_pSoundManager->Initialize(g_hWnd, DSSCL_PRIORITY); //DSSCL_PRIORITYë¡œ ì´ˆê¸°í™”
-	g_pSoundManager->SetPrimaryBufferFormat(2, 22050, 16); //ë²„í¼ ì„¤ì •
-
-	// ì‚¬ìš´ë“œ ë¦¬ì†ŒìŠ¤ ë¡œë“œ
-	g_pSoundManager->Create(&m_Bk1, (LPWSTR)L"./resource/Sound/BGM_0000.wav", 0, GUID_NULL);
-	g_pSoundManager->Create( &m_Shot, (LPWSTR)L"./resource/Sound/shot.wav", 0, GUID_NULL ) ;
-	g_pSoundManager->Create(&m_Boom, (LPWSTR)L"./resource/Sound/explosion.wav", 0, GUID_NULL);
-	g_pSoundManager->Create(&m_GunShot, (LPWSTR)L"./resource/Sound/Backgroundshot-0001.wav", 0, GUID_NULL);
-
-	// ì  ì‚¬ë§ ì‚¬ìš´ë“œ ë°°ì—´ ë¡œë“œ
-	for (int i = 0; i < 4; i++)
-	{ 
-		g_pSoundManager->Create(&m_EnemyDieArray[i], L"./resource/Sound/enemydie_0001.wav", 0);
 	}
 }
 
 void Sound::StopAll()
 {
 	if (m_Bk1) m_Bk1->Stop(); 
-	isMuted = true; // ì „ì²´ ìŒì†Œê±° ìƒíƒœë¡œ ì „í™˜
+	isMuted = true; // ÀüÃ¼ À½¼Ò°Å »óÅÂ·Î ÀüÈ¯
 }
 
 void Sound::PlayGunShot()

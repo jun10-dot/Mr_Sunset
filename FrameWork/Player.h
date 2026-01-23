@@ -1,28 +1,28 @@
-ï»¿#pragma once
+#pragma once
 #include "Include.h"
 
 class Player
 {
 private:
-	bool grounded; // ìºë¦­í„°ê°€ ë°”ë‹¥ì— ë‹¿ì•˜ëŠ”ì§€ ì—¬ë¶€
-	int m_CurrentFrame; // í˜„ì¬ ì¶œë ¥í•  ì• ë‹ˆë©”ì´ì…˜ í”„ë ˆì„
-	DWORD m_AnimTime;  // ë§ˆì§€ë§‰ ì• ë‹ˆë©”ì´ì…˜ í”„ë ˆì„ ë³€ê²½ ì‹œê°„
-	DWORD m_FrameDelay[2] = { 1500,100 }; // ëˆˆ ê¹œë¹¡ì„ ë”œë ˆì´
+	bool grounded; // Ä³¸¯ÅÍ°¡ ¹Ù´Ú¿¡ ´ê¾Ò´ÂÁö ¿©ºÎ
+	int m_CurrentFrame; // ÇöÀç Ãâ·ÂÇÒ ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ
+	DWORD m_AnimTime;  // ¸¶Áö¸· ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ º¯°æ ½Ã°£
+	DWORD m_FrameDelay[2] = { 1500,100 }; // ´« ±ôºıÀÓ µô·¹ÀÌ
 	DWORD m_PlayerTime;
 	float gravity;
-	float angle;  // ì´ ì´ë¯¸ì§€ì˜ íšŒì „ê°ë„ - ë§ˆìš°ìŠ¤ ìœ„ì¹˜
+	float angle;  // ÃÑ ÀÌ¹ÌÁöÀÇ È¸Àü°¢µµ - ¸¶¿ì½º À§Ä¡
 
 public :
 	Player();
 	~Player();
 	
-	Sprite playerimg[2]; // ìºë¦­í„° 2í”„ë ˆì„ ì´ë¯¸ì§€
-	Sprite Scope; //ì¡°ì¤€ê²½ ì´ë¯¸ì§€
-	Sprite Gun; // ì´ ì´ë¯¸ì§€
+	Sprite playerimg[2]; // Ä³¸¯ÅÍ 2ÇÁ·¹ÀÓ ÀÌ¹ÌÁö
+	Sprite Scope; //Á¶ÁØ°æ ÀÌ¹ÌÁö
+	Sprite Gun; // ÃÑ ÀÌ¹ÌÁö
 
-	D3DXIMAGE_INFO imagesinfo;  // í•´ìƒë„ ë° ë¹„íŠ¸ë§µ ì •ë³´
-	RECT m_rc; // ìºë¦­í„° ì¶©ëŒ ì˜ì—­
-	D3DXVECTOR2 pos; //ìºë¦­í„°ì˜ í™”ë©´ ìƒ ìœ„ì¹˜ ë²¡í„° 
+	D3DXIMAGE_INFO imagesinfo;  // ÇØ»óµµ ¹× ºñÆ®¸Ê Á¤º¸
+	RECT m_rcPlayer; // Ä³¸¯ÅÍ Ãæµ¹ ¿µ¿ª
+	D3DXVECTOR2 pos; //Ä³¸¯ÅÍÀÇ È­¸é »ó À§Ä¡ º¤ÅÍ 
 
 	void Init();
 	void Update();
@@ -30,6 +30,6 @@ public :
 };
 
 extern Player player; 
-extern float MouseX; // ë§ˆìš°ìŠ¤ ì»¤ì„œì˜ X ì¢Œí‘œ
-extern float MouseY; // ë§ˆìš°ìŠ¤ ì»¤ì„œì˜ Y ì¢Œí‘œ
-extern bool isFireBullet; // ì´ì•Œ ë°œì‚¬ ëª…ë ¹ í”Œë˜ê·¸
+extern float MouseX; // ¸¶¿ì½º Ä¿¼­ÀÇ X ÁÂÇ¥
+extern float MouseY; // ¸¶¿ì½º Ä¿¼­ÀÇ Y ÁÂÇ¥
+extern bool isFireBullet; // ÃÑ¾Ë ¹ß»ç ¸í·É ÇÃ·¡±×

@@ -1,4 +1,4 @@
-Ôªø#pragma once
+#pragma once
 #include "Include.h"
 
 Device DV;
@@ -25,7 +25,7 @@ bool Device::Create(IDirect3DDevice9* Device)
 	fdesc.Italic = FALSE ;
 	fdesc.CharSet = DEFAULT_CHARSET ;
 	//fdesc.FaceName[LF_FACESIZE];
-	_tcscpy_s( fdesc.FaceName,sizeof(fdesc.FaceName), _T("ÎèãÏõÄ") ) ;
+	_tcscpy_s( fdesc.FaceName,sizeof(fdesc.FaceName), _T("µ∏øÚ") ) ;
 
 	D3DXCreateFontIndirect( Device9 , &fdesc , &Fonts ) ;
 
