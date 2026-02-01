@@ -2,7 +2,7 @@
 <img width="520" height="320" alt="스크린샷 2026-01-15 013257" src="https://github.com/user-attachments/assets/635148eb-5408-400b-8499-5cff8764175d" />
 
 [게임 실행](https://github.com/jun10-dot/Mr_Sunset/releases/latest)
-
+[전체 플레이 영상 (YouTube)](https://youtu.be/hft7NLTV1gM)
 [프로젝트 상세 설명 (Notion)](https://www.notion.so/Mr_Sunset-2e6be5889bd7802f814eeaf30bbed7ca)
 
 ## 📍 프로젝트 소개 
@@ -10,9 +10,6 @@
 기본 프레임워크 기반 PC 2D 슈팅 게임입니다.
 - PC 환경에 맞도록 모든 스테이지를 클리어하면
   총 플레이 시간과 점수를 종합해 성과를 확인할 수 있도록 결과 시스템을 설계했습니다.
-
-## 📺 전체 플레이 영상
-[YouTube](https://youtu.be/hft7NLTV1gM)
 
 ## 🔎 프로젝트 정보
 
