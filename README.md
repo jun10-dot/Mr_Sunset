@@ -1,6 +1,6 @@
 ## 🎮 Mr_Sunset 
 <img width="520" height="320" alt="스크린샷 2026-01-15 013257" src="https://github.com/user-attachments/assets/635148eb-5408-400b-8499-5cff8764175d" />
-
+- [게임 실행] (https://github.com/jun10-dot/Mr_Sunset/releases/latest)
 ## 📍 프로젝트 소개 
 - 미스터선셋(Mr Sunset)은 모바일 게임 Mr Bullet을 레퍼런스로 한
 기본 프레임워크 기반 PC 2D 슈팅 게임입니다.
