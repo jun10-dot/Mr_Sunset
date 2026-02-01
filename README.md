@@ -2,7 +2,9 @@
 <img width="520" height="320" alt="스크린샷 2026-01-15 013257" src="https://github.com/user-attachments/assets/635148eb-5408-400b-8499-5cff8764175d" />
 
 [게임 실행](https://github.com/jun10-dot/Mr_Sunset/releases/latest)
+
 [전체 플레이 영상 (YouTube)](https://youtu.be/hft7NLTV1gM)
+
 [프로젝트 상세 설명 (Notion)](https://www.notion.so/Mr_Sunset-2e6be5889bd7802f814eeaf30bbed7ca)
 
 ## 📍 프로젝트 소개 
