@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Include.h"
 struct SysTem
 {
@@ -8,40 +8,42 @@ struct SysTem
 class GameManager
 {
 private:
-	FILE* fp; // ÆÄÀÏ Æ÷ÀÎÅÍ (ÀúÀå/·Îµå¿ë)
-	bool timerStarted; // ´ÙÀ½ ½ºÅ×ÀÌÁö ½ÃÀÛ ¿©ºÎ
-	int wallSpeedLeft; //¿ŞÂÊ º®ÀÇ ÀÌµ¿ ¼Óµµ
-	int wallSpeedRight; //¿À¸¥ÂÊ º®ÀÇ ÀÌµ¿ ¼Óµµ
+	FILE* fp; // íŒŒì¼ í¬ì¸í„° (ì €ì¥/ë¡œë“œìš©)
+	bool timerStarted; // ë‹¤ìŒ ìŠ¤í…Œì´ì§€ ì‹œì‘ ì—¬ë¶€
+	int wallSpeedLeft; //ì™¼ìª½ ë²½ì˜ ì´ë™ ì†ë„
+	int wallSpeedRight; //ì˜¤ë¥¸ìª½ ë²½ì˜ ì´ë™ ì†ë„
 public:
 	GameManager(void);
 	~GameManager(void);
 
 	SysTem m_SysTem;
 
-	int DrawTotal; // ½ºÅ×ÀÌÁö Å¬¸®¾î Á¡¼ö ´©Àû ÇÕ»ê
-	DWORD GameTime; // Å¸ÀÌ¸Ó ½ÃÀÛ ½Ã°£
-	DWORD m_GamePlayTime; // ´©Àû °ÔÀÓ ÇÃ·¹ÀÌ ½Ã°£
-	bool m_TimerRunning; // °ÔÀÓ ½Ã°£ ÃøÁ¤ ÁßÀÎÁö ¿©ºÎ
+	int DrawTotal; // ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ ì ìˆ˜ ëˆ„ì  í•©ì‚°
+	DWORD GameTime; // íƒ€ì´ë¨¸ ì‹œì‘ ì‹œê°„
+	DWORD m_GamePlayTime; // ëˆ„ì  ê²Œì„ í”Œë ˆì´ ì‹œê°„
+	bool m_TimerRunning; // ê²Œì„ ì‹œê°„ ì¸¡ì • ì¤‘ì¸ì§€ ì—¬ë¶€
 
-	bool m_GameStart; // °ÔÀÓÀÌ ½ÃÀÛµÇ¾ú´ÂÁö ¿©ºÎ 
-	bool canShowScore; // Á¡¼ö È­¸éÀ» º¸¿©ÁÙ ¼ö ÀÖ´ÂÁö ¿©ºÎ
-	bool tntHit; // TNT ºí·ÏÀÌ ÃÑ¾Ë¿¡ ¸Â¾Ò´ÂÁö ¿©ºÎ
+	bool m_GameStart; // ê²Œì„ì´ ì‹œì‘ë˜ì—ˆëŠ”ì§€ ì—¬ë¶€ 
+	bool canShowScore; // ì ìˆ˜ í™”ë©´ì„ ë³´ì—¬ì¤„ ìˆ˜ ìˆëŠ”ì§€ ì—¬ë¶€
+	bool tntHit; // TNT ë¸”ë¡ì´ ì´ì•Œì— ë§ì•˜ëŠ”ì§€ ì—¬ë¶€
 
-	std::list<Enemy*>	myList; // ½ºÅ×ÀÌÁö¿¡ Á¸ÀçÇÏ´Â Àû ¸ñ·Ï
-	
-	ULONGLONG conditionStartTime; // ½ºÅ×ÀÌÁö Á¾·á Á¶°Ç ¸¸Á· ½Ã ½Ã°£ ±â·Ï
-	
-	void GameReset(void); // // ½ºÅ×ÀÌÁöº° ÃÊ±âÈ­
+	std::list<Enemy*>	myList; // ìŠ¤í…Œì´ì§€ì— ì¡´ì¬í•˜ëŠ” ì  ëª©ë¡
+
+	ULONGLONG conditionStartTime; // ìŠ¤í…Œì´ì§€ ì¢…ë£Œ ì¡°ê±´ ë§Œì¡± ì‹œ ì‹œê°„ ê¸°ë¡
+
+	void GameReset(); // // ìŠ¤í…Œì´ì§€ë³„ ì´ˆê¸°í™”
+	void ShowScore();
+	void HandleDeadEnemies();
 	void Init();
 	void Update();
 	void Draw();
-	void Save(); // ½Ã½ºÅÛ ¼³Á¤ ÀúÀå
-	void Nextmap(); // ´ÙÀ½ ¸ÊÀ¸·Î ÀüÈ¯ÇÏ°Å³ª °ÔÀÓÀ» Á¾·á
-	void Prvchap(); // ÀÌÀü Ã©ÅÍ (¸Ş´º)·Î µ¹¾Æ°¡±â
-	void ObstacleUpdate(); // ½ºÅ×ÀÌÁö3/º®(Àå¾Ö¹°) ÀÌµ¿ ¾÷µ¥ÀÌÆ®
-	void SetCursorVisible(bool visible); // ¸¶¿ì½º Ä¿¼­ È°¼ºÈ­/ºñÈ°¼ºÈ­
+	void Save(); // ì‹œìŠ¤í…œ ì„¤ì • ì €ì¥
+	void Nextmap(); // ë‹¤ìŒ ë§µìœ¼ë¡œ ì „í™˜í•˜ê±°ë‚˜ ê²Œì„ì„ ì¢…ë£Œ
+	void Prvchap(); // ì´ì „ ì±•í„° (ë©”ë‰´)ë¡œ ëŒì•„ê°€ê¸°
+	void ObstacleUpdate(); // ìŠ¤í…Œì´ì§€3/ë²½(ì¥ì• ë¬¼) ì´ë™ ì—…ë°ì´íŠ¸
+	void SetCursorVisible(bool visible); // ë§ˆìš°ìŠ¤ ì»¤ì„œ í™œì„±í™”/ë¹„í™œì„±í™”
 };
 
 extern GameManager Gmanager;
-extern bool isFireBullet; // ÃÑ¾Ë ¹ß»ç ¿äÃ» ÇÃ·¡±×
-extern int BulletCount; // ÃÑ¾Ë »ç¿ë È½¼ö
+extern bool isFireBullet; // ì´ì•Œ ë°œì‚¬ ìš”ì²­ í”Œë˜ê·¸
+extern int BulletCount; // ì´ì•Œ ì‚¬ìš© íšŸìˆ˜

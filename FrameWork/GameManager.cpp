@@ -1,4 +1,4 @@
-#define _CRT_NONSTDC_NO_DEPRECATE
+ï»¿#define _CRT_NONSTDC_NO_DEPRECATE
 #include "Include.h"
 
 GameManager Gmanager;
@@ -7,7 +7,7 @@ GameManager::GameManager(void)
 {
 	m_SysTem.m_Save1 = 100;
 
-	m_GameStart = true; // °ÔÀÓ ½ÃÀÛ ÇÃ·¡±× ¼³Á¤
+	m_GameStart = true; // ê²Œì„ ì‹œì‘ í”Œë˜ê·¸ ì„¤ì •
 
 	GameTime=0;
     m_GamePlayTime=0;
@@ -28,154 +28,159 @@ void GameManager::Init()
 	wallSpeedRight = 1;
 	tntHit = false;
 
-	// ±â°è¾î ¹öÀü
+	// ê¸°ê³„ì–´ ë²„ì „
 	FILE* fp = fopen("./Save/save.fss", "rb");
 	if (fp != NULL)
 	{
 		fread(&m_SysTem, sizeof(SysTem), 1, fp);
-		fclose(fp);  // ÆÄÀÏÀÌ ¿­·ÈÀ» ¶§¸¸ ´İ±â
+		fclose(fp);  // íŒŒì¼ì´ ì—´ë ¸ì„ ë•Œë§Œ ë‹«ê¸°
 	}
-	
 }
 
-void GameManager::Update()
+void GameManager::ShowScore()
 {
-	// ½ºÅ×ÀÌÁö Å¬¸®¾î, Á¾·á Á¶°Ç È®ÀÎ
+	// ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´, ì¢…ë£Œ ì¡°ê±´ í™•ì¸
 	bool aliveEnemyExists = false;
 	for (auto enemy : myList)
 	{
 		if (!enemy->isDead)
 		{
-			aliveEnemyExists = true; // »ì¾ÆÀÖ´Â ÀûÀÌ ÇÏ³ª¶óµµ ÀÖÀ¸¸é true
+			aliveEnemyExists = true; // ì‚´ì•„ìˆëŠ” ì ì´ í•˜ë‚˜ë¼ë„ ìˆìœ¼ë©´ true
 			break;
 		}
 	}
-	// ´ÙÀ½ ¸Ê/Á¡¼ö ÀüÈ¯ Å¸ÀÌ¸Ó ½ÃÀÛ Á¶°Ç
+	// ë‹¤ìŒ ë§µ/ì ìˆ˜ ì „í™˜ íƒ€ì´ë¨¸ ì‹œì‘ ì¡°ê±´
 	if (!timerStarted)
 	{
-		// ÀûÀÌ ¸ğµÎ Á×°Å³ª ¾ø°í, ÃÑ¾ËÀÌ ¸ğµÎ ¼ÒÁøµÈ °æ¿ì (¼º°ø Á¶°Ç)
+		// ì ì´ ëª¨ë‘ ì£½ê±°ë‚˜ ì—†ê³ , ì´ì•Œ ë°œì‚¬ ì¤‘ë‹¨ëœ ìƒíƒœë¼ë©´ (ì„±ê³µ ì¡°ê±´)
 		if ((myList.empty() || !aliveEnemyExists) && !isFireBullet)
 		{
 			conditionStartTime = GetTickCount64();
 			timerStarted = true;
 		}
-		// ÀûÀÌ ³²¾ÆÀÖ´Âµ¥ (aliveEnemyExists), ÃÑ¾ËÀ» 6¹ß ´Ù ¾²°í (BulletCount == 6), 
-		// ÇöÀç ¹ß»çµÈ ÃÑ¾ËÀÌ ¾ø´Â °æ¿ì (!isFireBullet) (½ÇÆĞ/ÀçµµÀü Á¶°Ç)
+		// ì ì´ ë‚¨ì•„ìˆê³  ì´ì•Œ 6ë°œ ë‹¤ ì“°ê³  
+		// ì´ì•Œ ë°œì‚¬ ì¤‘ë‹¨ëœ ìƒíƒœì¸ ê²½ìš° (!isFireBullet) (ì‹¤íŒ¨/ì¬ë„ì „ ì¡°ê±´)
 		else if (aliveEnemyExists && BulletCount == 6 && !isFireBullet)
 		{
 			conditionStartTime = GetTickCount64();
 			timerStarted = true;
 		}
 	}
-
-	// Àû ¾÷µ¥ÀÌÆ®
-	for (auto Iter = myList.begin(); Iter != myList.end(); Iter++)
-	{
-		(*Iter)->Update();
-	}
-	// Á×Àº Àû Ã³¸® ¹× Á¦°Å (¸®½ºÆ® °ü¸®)
-	for (auto iter = myList.begin(); iter != myList.end();)
-	{
-		Enemy* pEnemy = *iter;
-		// ÀûÀÌ ÃÑ¾Ë¿¡ ¸Â¾Ò°Å³ª TNT°¡ Æø¹ßÇÑ °æ¿ì ( °Å¸®Å½»ö X )
-		if ((*pEnemy).isHit || block.Exploded)
-		{
-			if (pEnemy->HitTime == 0) // Ã³À½ ¸ÂÀº ½Ã°£ ±â·Ï
-			{
-				pEnemy->HitTime = GetTickCount64();
-				pEnemy->isDead = true;
-			}
-			// ¸ÂÀº ÈÄ 1ÃÊ°¡ Áö³ª¸é ¸®½ºÆ®¿¡¼­ Á¦°Å
-			if (GetTickCount64() - pEnemy->HitTime >= 1000)
-			{
-				delete pEnemy; // ¸Ş¸ğ¸® ÇØÁ¦
-				iter = myList.erase(iter);  // ¸®½ºÆ®¿¡¼­ Á¦°Å
-				continue;
-			}		
-		}
-     	++iter; // Á×Áö ¾Ê¾Ò´Ù¸é ´ÙÀ½ ¿ä¼Ò·Î ÀÌµ¿
-		
-	}
-	ObstacleUpdate(); // ½ºÅ×ÀÌÁö 3 Àü¿ë ¿òÁ÷ÀÌ´Â º®(Àå¾Ö¹°) ¾÷µ¥ÀÌÆ®
 }
 
-// ¼³Á¤ ÀúÀå (¼ö¾÷ Á¦°ø ÇÔ¼ö)
+void GameManager::HandleDeadEnemies()
+{
+	
+	// ì£½ì€ ì  ì²˜ë¦¬ ë° ì œê±° (ë¦¬ìŠ¤íŠ¸ ê´€ë¦¬)
+	for (auto enemy = myList.begin(); enemy != myList.end();)
+	{
+		// ì ì´ ì´ì•Œì— ë§ì•˜ê±°ë‚˜ TNTê°€ í­ë°œí•œ ê²½ìš° ( ê±°ë¦¬íƒìƒ‰ X )
+		if ((*enemy)->isHit || block.Exploded)
+		{
+			if ((*enemy)->HitTime == 0) // ì²˜ìŒ ë§ì€ ì‹œê°„ ê¸°ë¡
+			{
+				(*enemy)->HitTime = GetTickCount64();
+				(*enemy)->isDead = true;
+			}
+			// ë§ì€ í›„ 1ì´ˆê°€ ì§€ë‚˜ë©´ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
+			if (GetTickCount64() - (*enemy)->HitTime >= 1000)
+			{
+				delete *enemy; // ë©”ëª¨ë¦¬ í•´ì œ
+				enemy = myList.erase(enemy);  // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
+				continue;
+			}
+		}
+		(*enemy)->Update(); // ì  ì—…ë°ì´íŠ¸
+		++enemy; // ì£½ì§€ ì•Šì•˜ë‹¤ë©´ ë‹¤ìŒ ìš”ì†Œë¡œ ì´ë™
+
+	}
+}
+
+void GameManager::Update()
+{
+	HandleDeadEnemies();
+	ShowScore();
+	ObstacleUpdate();
+}
+
+// ì„¤ì • ì €ì¥ (ìˆ˜ì—… ì œê³µ í•¨ìˆ˜)
 void GameManager::Save() 
 {
-	// "wb"·Î ÆÄÀÏ ¿­±â
+	// "wb"ë¡œ íŒŒì¼ ì—´ê¸°
 	if ((fp = fopen("./Save/save.fss", "wb")) == NULL)
 	{
-		return; // ÆÄÀÏ ¿­±â ½ÇÆĞ ½Ã Á¾·á
+		return; // íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨ ì‹œ ì¢…ë£Œ
 	}
-	fwrite(&m_SysTem, sizeof(SysTem), 1, fp); // ±¸Á¶Ã¼ µ¥ÀÌÅÍ¸¦ ÆÄÀÏ¿¡ ¾²±â
+	fwrite(&m_SysTem, sizeof(SysTem), 1, fp); // êµ¬ì¡°ì²´ ë°ì´í„°ë¥¼ íŒŒì¼ì— ì“°ê¸°
 	fclose(fp);
 
 }
 
-// ´ÙÀ½ ¸ÊÀ¸·Î ÀüÈ¯ ¶Ç´Â °ÔÀÓ Á¾·á
+// ë‹¤ìŒ ë§µìœ¼ë¡œ ì „í™˜ ë˜ëŠ” ê²Œì„ ì¢…ë£Œ
 void GameManager::Nextmap()
 {
-	if (result.Nextmap == true) // ´ÙÀ½ ¸Ê ¹öÆ°ÀÌ ´­·È´Ù¸é
+	if (result.Nextmap == true) // ë‹¤ìŒ ë§µ ë²„íŠ¼ì´ ëˆŒë ¸ë‹¤ë©´
 	{
-		// ÃÑ¾Ë ³²Àº °³¼ö¿¡ µû¸¥ Á¡¼ö °è»ê ±×¸®°í ÇÕ»ê
-		if (BulletCount <= 2) //ÃÑ¾Ë 6¹ßÁß 2¹ß ÀÌÇÏ »ç¿ë
+		// ì´ì•Œ ë‚¨ì€ ê°œìˆ˜ì— ë”°ë¥¸ ì ìˆ˜ ê³„ì‚° ê·¸ë¦¬ê³  í•©ì‚°
+		if (BulletCount <= 2) //ì´ì•Œ 6ë°œì¤‘ 2ë°œ ì´í•˜ ì‚¬ìš©
 		{
-			DrawTotal += 3; // ½ºÄÚ¾î 3Á¡
+			DrawTotal += 3; // ìŠ¤ì½”ì–´ 3ì 
 		}
 		else if (BulletCount <= 4)
 		{
-			DrawTotal += 2; // ½ºÄÚ¾î 2Á¡
+			DrawTotal += 2; // ìŠ¤ì½”ì–´ 2ì 
 		}
 		else if (BulletCount <= 6)
 		{
-			DrawTotal += 1; // ½ºÄÚ¾î 1Á¡
+			DrawTotal += 1; // ìŠ¤ì½”ì–´ 1ì 
 		}
-		if (map.m_Stage >= 4)  // ½ºÅ×ÀÌÁö4 Å¬¸®¾î ½Ã °ÔÀÓ ¿À¹ö
+		if (map.m_Stage >= 4)  // ìŠ¤í…Œì´ì§€4 í´ë¦¬ì–´ ì‹œ ê²Œì„ ì˜¤ë²„
 		{
-			g_Mng.n_Chap = OVER; // Ã©ÅÍ¸¦ °ÔÀÓ ¿À¹ö·Î ¼³Á¤  
+			g_Mng.n_Chap = OVER; // ì±•í„°ë¥¼ ê²Œì„ ì˜¤ë²„ë¡œ ì„¤ì •  
 			if (m_TimerRunning) {
-				// Å¸ÀÌ¸Ó¸¦ ÁßÁöÇÏ°í °æ°ú ½Ã°£À» ´©Àû ½Ã°£¿¡ ÇÕ»ê
+				// íƒ€ì´ë¨¸ë¥¼ ì¤‘ì§€í•˜ê³  ê²½ê³¼ ì‹œê°„ì„ ëˆ„ì  ì‹œê°„ì— í•©ì‚°
 				m_GamePlayTime += GetTickCount64() - GameTime;
 				m_TimerRunning = false;
 			}
 		}
-		// ´ÙÀ½ ½ºÅ×ÀÌÁö·Î ÀüÈ¯
+		// ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¡œ ì „í™˜
 		else
 		{
-			SetCursorVisible(FALSE); // Ä¿¼­ ¼û±è
-			map.m_Stage++; // ½ºÅ×ÀÌÁö ¹øÈ£ Áõ°¡
-			map.Init(); // ¸Ê ÃÊ±âÈ­
-			GameReset(); // °ÔÀÓ ¿ä¼Ò ÃÊ±âÈ­
+			SetCursorVisible(FALSE); // ì»¤ì„œ ìˆ¨ê¹€
+			map.m_Stage++; // ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ ì¦ê°€
+			map.Init(); // ë§µ ì´ˆê¸°í™”
+			GameReset(); // ê²Œì„ ìš”ì†Œ ì´ˆê¸°í™”
 		}
 	}
 }
 
-// ½ºÅ×ÀÌÁö ÀüÈ¯ ½Ã °ÔÀÓ ¿ä¼Ò ÃÊ±âÈ­
+// ìŠ¤í…Œì´ì§€ ì „í™˜ ì‹œ ê²Œì„ ìš”ì†Œ ì´ˆê¸°í™”
 void GameManager::GameReset(void) 
 {
-	// Àû ¸®½ºÆ® ¸Ş¸ğ¸® ÇØÁ¦ ¹× Å¬¸®¾î
+	// ì  ë¦¬ìŠ¤íŠ¸ ë©”ëª¨ë¦¬ í•´ì œ ë° í´ë¦¬ì–´
 	for (auto it = myList.begin(); it != myList.end(); ++it) {
 		delete* it;
 	}
 	myList.clear();
 
-	SetCursorVisible(FALSE); // Ä¿¼­ ¼û±è
-	BulletCount = 0; // ÃÑ¾Ë »ç¿ë È½¼ö ÃÊ±âÈ­
-	game.Init(); // ´Ù¸¥ °ÔÀÓ °ü·Ã °´Ã¼ ÃÊ±âÈ­
+	SetCursorVisible(FALSE); // ì»¤ì„œ ìˆ¨ê¹€
+	BulletCount = 0; // ì´ì•Œ ì‚¬ìš© íšŸìˆ˜ ì´ˆê¸°í™”
+	game.Init(); // ë‹¤ë¥¸ ê²Œì„ ê´€ë ¨ ê°ì²´ ì´ˆê¸°í™”
 }
 
+// ìŠ¤í…Œì´ì§€ 3 ì „ìš© ì›€ì§ì´ëŠ” ë²½(ì¥ì• ë¬¼) ì—…ë°ì´íŠ¸
 void GameManager::ObstacleUpdate()
 {
 	if (map.m_Stage == 3)     
 	{
-		// ¿ŞÂÊ º® ÀÌµ¿ (YÃà)
+		// ì™¼ìª½ ë²½ ì´ë™ (Yì¶•)
 		coll.wallYleftMove += wallSpeedLeft;
-		// º®ÀÌ ÇØ´ç ÁÂÇ¥±îÁö µµ´ŞÇÏ¸é ¼Óµµ ¹İÀü 
-		if (coll.wallYleftMove <=350 || coll.wallYleftMove + 200 >= 870)  //yÃà
+		// ë²½ì´ í•´ë‹¹ ì¢Œí‘œê¹Œì§€ ë„ë‹¬í•˜ë©´ ì†ë„ ë°˜ì „ 
+		if (coll.wallYleftMove <=350 || coll.wallYleftMove + 200 >= 870)  //yì¶•
 			wallSpeedLeft *= -1;
 		
 
-		// ¿À¸¥ÂÊ º® ÀÌµ¿ (YÃà)         
+		// ì˜¤ë¥¸ìª½ ë²½ ì´ë™ (Yì¶•)         
 		coll.wallYrightMove -= wallSpeedRight;
 		// " "
 		if (coll.wallYrightMove >=670 || coll.wallYrightMove + 200 <=550)
@@ -186,43 +191,43 @@ void GameManager::ObstacleUpdate()
 
 void GameManager::Draw()
 {
-	// Àû ·»´õ¸µ
+	// ì  ë Œë”ë§
 	for (auto Iter = myList.begin(); Iter != myList.end(); Iter++)
 		(*Iter)->Draw();
 	
-	// Á¡¼ö È­¸é ÀüÈ¯ Å¸ÀÌ¸Ó Ã¼Å© (3ÃÊ ´ë±â)
+	// ì ìˆ˜ í™”ë©´ ì „í™˜ íƒ€ì´ë¨¸ ì²´í¬ (3ì´ˆ ëŒ€ê¸°)
 	if (timerStarted && GetTickCount64() - conditionStartTime >= 3000)
 	{
 		canShowScore = true;
-		SetCursorVisible(TRUE); // Ä¿¼­ Ç¥½Ã
+		SetCursorVisible(TRUE); // ì»¤ì„œ í‘œì‹œ
 	}
 	
 	result.SetShowFlag(canShowScore); // result.canShow = true
-	result.Draw(); // result.canShow°¡ trueÀÌ¸é ·ÎÁ÷ ½ÇÇà
+	result.Draw(); // result.canShowê°€ trueì´ë©´ ë¡œì§ ì‹¤í–‰
 }
 
-// ¸Ş´º È­¸éÀ¸·Î µ¹¾Æ°¡±â
+// ë©”ë‰´ í™”ë©´ìœ¼ë¡œ ëŒì•„ê°€ê¸°
 void  GameManager::Prvchap()
 {
 	if (canShowScore)
 	{
-		SetCursorVisible(FALSE); // Á¡¼ö È­¸éÀ» ´İ±â À§ÇØ Ä¿¼­ ¼û±è
+		SetCursorVisible(FALSE); // ì ìˆ˜ í™”ë©´ì„ ë‹«ê¸° ìœ„í•´ ì»¤ì„œ ìˆ¨ê¹€
 	} 
-	SetCursorVisible(TRUE); // Ä¿¼­ Ç¥½Ã
-	DrawTotal = 0; // ´©Àû Á¡¼ö ÃÊ±âÈ­
-	g_Mng.n_Chap = MENU; // ¸Ş´º·Î ÀüÈ¯
-	sound.m_Bk1->Stop(); // ¹è°æÀ½¾Ç ÁßÁö
-	map.m_Stage = 1; // ½ºÅ×ÀÌÁö ÃÊ±âÈ­
+	SetCursorVisible(TRUE); // ì»¤ì„œ í‘œì‹œ
+	DrawTotal = 0; // ëˆ„ì  ì ìˆ˜ ì´ˆê¸°í™”
+	g_Mng.n_Chap = MENU; // ë©”ë‰´ë¡œ ì „í™˜
+	sound.m_Bk1->Stop(); // ë°°ê²½ìŒì•… ì¤‘ì§€
+	map.m_Stage = 1; // ìŠ¤í…Œì´ì§€ ì´ˆê¸°í™”
 }
 
-// ¸¶¿ì½º Ä¿¼­ Ç¥½Ã/¼û±è Á¦¾î
+// ë§ˆìš°ìŠ¤ ì»¤ì„œ í‘œì‹œ/ìˆ¨ê¹€ ì œì–´
 void GameManager::SetCursorVisible(bool visible)
 {
 	int count;
 	if (visible) 
-		while ((count = ShowCursor(TRUE)) < 0);  // Ä¿¼­°¡ º¸ÀÏ ¶§±îÁö ¹İº¹ (Ä«¿îÆ® 0 ÀÌ»ó)
+		while ((count = ShowCursor(TRUE)) < 0);  // ì»¤ì„œê°€ ë³´ì¼ ë•Œê¹Œì§€ ë°˜ë³µ (ì¹´ìš´íŠ¸ 0 ì´ìƒ)
 	
 	else 
-		while ((count = ShowCursor(FALSE)) >= 0); // Ä¿¼­°¡ ¼û°ÜÁú ¶§±îÁö ¹İº¹ (Ä«¿îÆ® -1 ¹Ì¸¸)
+		while ((count = ShowCursor(FALSE)) >= 0); // ì»¤ì„œê°€ ìˆ¨ê²¨ì§ˆ ë•Œê¹Œì§€ ë°˜ë³µ (ì¹´ìš´íŠ¸ -1 ë¯¸ë§Œ)
 	
 }
