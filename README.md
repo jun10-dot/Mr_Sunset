@@ -3,7 +3,7 @@
 
 [게임 실행] (https://github.com/jun10-dot/Mr_Sunset/releases/latest)
 
-[Notion] (https://www.notion.so/Mr_Sunset-2e6be5889bd7802f814eeaf30bbed7ca)
+[Notion] (https://www.notion.so/Mr_Sunset)
 
 ## 📍 프로젝트 소개 
 - 미스터선셋(Mr Sunset)은 모바일 게임 Mr Bullet을 레퍼런스로 한
